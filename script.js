@@ -5,7 +5,7 @@
 const content = document.getElementById("content");
 const modal = document.getElementById("modal");
 const modalJP = document.getElementById("modalJP");
-const closeButton = document.getElementById("close");
+const speakButton = document.getElementById("speak");
 
 const yenTopInput = document.getElementById("yenTopInput");
 const yenTopResult = document.getElementById("yenTopResult");
@@ -13,13 +13,34 @@ const yenTopResult = document.getElementById("yenTopResult");
 let currentTab = "phrases";
 let currentYenRate = 0.024;
 
-// משתנים למעקב אחר לחיצות שגויות על סאונד
 let clickCounts = {};
 let warningTimeout = null;
+let lastWarningTime = 0;
 
-// יצירת אלמנט הודעת אזהרה דינמית לווליום
+// יצירת אלמנט הודעת אזהרה מעוצב לפי עיצוב הכפתור המבוקש
 const volumeWarning = document.createElement("div");
-volumeWarning.style.cssText = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:#1f96a1; padding:10px 20px; border-radius:8px; font-size:14px; z-index:1000; display:none; box-shadow:0 4px 10px rgba(0,0,0,0.3); direction:rtl;";
+volumeWarning.style.cssText = `
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border: unset;
+    border-radius: 15px;
+    color: #212121;
+    z-index: 1000;
+    background: #e8e8e8;
+    position: fixed;
+    font-weight: 1000;
+    font-size: 17px;
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
+    transition: all 250ms;
+    overflow: hidden;
+    display: none;
+    direction: rtl;
+    text-align: center;
+    cursor: default;
+`;
 volumeWarning.textContent = "ייתכן שהווליום במכשיר שלך מכובה או על שקט";
 document.body.appendChild(volumeWarning);
 
@@ -37,7 +58,11 @@ async function fetchLiveYenRate() {
 fetchLiveYenRate();
 
 if (yenTopInput) {
+    yenTopInput.setAttribute("maxlength", "10");
     yenTopInput.addEventListener("input", () => {
+        if(yenTopInput.value.length > 10) {
+            yenTopInput.value = yenTopInput.value.slice(0, 10);
+        }
         const yen = parseFloat(yenTopInput.value) || 0;
         yenTopResult.textContent = "₪ " + (yen * currentYenRate).toFixed(2);
     });
@@ -129,10 +154,13 @@ emergency:[
 function speak(text){
 if(!window.speechSynthesis) return;
 
-// מעקב אחר כמות הלחיצות על אותו הטקסט
+const now = Date.now();
 clickCounts[text] = (clickCounts[text] || 0) + 1;
-if(clickCounts[text] > 3){
+
+// הצגת האזהרה אם לחץ 3 פעמים, וגם מאפשר הצגה חוזרת אחרי 10 שניות
+if(clickCounts[text] >= 3 && (now - lastWarningTime > 10000)){
     volumeWarning.style.display = "block";
+    lastWarningTime = now;
     if(warningTimeout) clearTimeout(warningTimeout);
     warningTimeout = setTimeout(()=>{
         volumeWarning.style.display = "none";
@@ -154,22 +182,22 @@ function openModal(jp) {
     if(modal) modal.classList.remove("hidden");
 }
 
-if (closeButton) {
-    closeButton.addEventListener("click", () => { modal.classList.add("hidden"); });
-}
-
 if (modal) {
     modal.addEventListener("click", (e) => {
         if (e.target === modal) { modal.classList.add("hidden"); }
     });
 }
 
+if (speakButton) {
+    speakButton.addEventListener("click", () => { speak(modalJP.textContent); });
+}
+
 function createCard(item){
 return `
 <div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}')">
-<div>
-<div class="cardMain">
-<div class="cardText">
+<div style="width: 100%; box-sizing: border-box;">
+<div class="cardMain" style="width: 100%; box-sizing: border-box;">
+<div class="cardText" style="min-width: 0; overflow: hidden; text-overflow: ellipsis;">
 <div class="cardHe">${item.he}</div>
 <div class="cardJp">${item.jp}</div>
 ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
