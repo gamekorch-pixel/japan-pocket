@@ -15,7 +15,7 @@ let currentYenRate = 0.024;
 
 let clickCounts = {};
 let warningTimeout = null;
-let lastWarningTime = 0;
+let hasShownWarning = false; // משתנה כדי לוודא שההודעה תופיע פעם אחת בלבד בכל הפעלת עמוד
 
 // יצירת אלמנט הודעת אזהרה מעוצב לפי עיצוב הכפתור המבוקש
 const volumeWarning = document.createElement("div");
@@ -30,7 +30,6 @@ volumeWarning.style.cssText = `
     color: #212121;
     z-index: 1000;
     background: #e8e8e8;
-    position: fixed;
     font-weight: 1000;
     font-size: 17px;
     box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
@@ -64,7 +63,7 @@ if (yenTopInput) {
             yenTopInput.value = yenTopInput.value.slice(0, 10);
         }
         const yen = parseFloat(yenTopInput.value) || 0;
-        yenTopResult.textContent = "₪ " + (yen * currentYenRate).toFixed(2);
+        yenTopResult.textContent = (yen * currentYenRate).toFixed(2) + " ₪";
     });
 }
 
@@ -154,13 +153,12 @@ emergency:[
 function speak(text){
 if(!window.speechSynthesis) return;
 
-const now = Date.now();
 clickCounts[text] = (clickCounts[text] || 0) + 1;
 
-// הצגת האזהרה אם לחץ 3 פעמים, וגם מאפשר הצגה חוזרת אחרי 10 שניות
-if(clickCounts[text] >= 3 && (now - lastWarningTime > 10000)){
+// הצגת האזהרה פעם אחת בלבד בכל הפעלת עמוד
+if(clickCounts[text] >= 3 && !hasShownWarning){
+    hasShownWarning = true;
     volumeWarning.style.display = "block";
-    lastWarningTime = now;
     if(warningTimeout) clearTimeout(warningTimeout);
     warningTimeout = setTimeout(()=>{
         volumeWarning.style.display = "none";
