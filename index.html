@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇯🇵 Japan Pocket</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+<h1>🇯🇵 Japan Pocket</h1>
+
+<p>כל מה שצריך לטיול ביפן</p>
+
+<input
+id="search"
+type="text"
+placeholder="🔍 חפש אוכל, משפט או מילה..."
+>
+
+</header>
+
+<nav>
+
+<button class="tab active" data-tab="phrases">
+🗣️
+<span>משפטים</span>
+</button>
+
+<button class="tab" data-tab="food">
+🍣
+<span>אוכל</span>
+</button>
+
+<button class="tab" data-tab="transport">
+🚆
+<span>תחבורה</span>
+</button>
+
+<button class="tab" data-tab="shopping">
+🛍️
+<span>קניות</span>
+</button>
+
+<button class="tab" data-tab="emergency">
+🚨
+<span>חירום</span>
+</button>
+
+<button class="tab" data-tab="currency">
+💴
+<span>ין</span>
+</button>
+
+</nav>
+
+<main id="content">
+
+</main>
+
+<div id="modal" class="hidden">
+
+<div class="modalBox">
+
+<button id="close">
+✖
+</button>
+
+<h1 id="modalJP"></h1>
+
+<h2 id="modalEN"></h2>
+
+<h3 id="modalHE"></h3>
+
+<button id="speak">
+
+🔊 השמע
+
+</button>
+
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
