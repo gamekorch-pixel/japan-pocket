@@ -157,17 +157,14 @@ function createCard(item){
     let isFav = favorites.includes(item.jp);
     return `
     <div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}')">
-        <div class="cardMain">
-            <div class="cardText">
-                <div class="cardHe">${item.he}</div>
-                <div class="cardJp">${item.jp}</div>
-                ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
-            </div>
+        <div class="card-left">
+            <button class="speak-card-btn" onclick="event.stopPropagation(); speak('${item.jp.replace(/'/g, "\\'")}')" title="השמע">🔊</button>
             <button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('${item.jp.replace(/'/g, "\\'")}')">${isFav ? '⭐' : '☆'}</button>
         </div>
-        ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
-        <div class="card-bottom" onclick="event.stopPropagation();">
-            <button onclick="speak('${item.jp}')">🔊 השמע</button>
+        <div class="cardText">
+            <div class="cardHe">${item.he}</div>
+            <div class="cardJp">${item.jp}</div>
+            ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
         </div>
     </div>
     `;
@@ -176,7 +173,7 @@ function createCard(item){
 function renderCards(list){
     content.innerHTML="";
     if(list.length===0){
-        content.innerHTML=`<div class="card" style="text-align:center; grid-column: 1 / -1;"><h2>⭐</h2><p>אין עדיין פריטים במועדפים</p></div>`;
+        content.innerHTML=`<div class="card" style="text-align:center; justify-content:center;"><div><h2>⭐</h2><p>אין עדיין פריטים במועדפים</p></div></div>`;
         return;
     }
     list.forEach(item=>{ content.innerHTML+=createCard(item); });
@@ -198,7 +195,7 @@ function render(){
     renderCards(list);
 }
 
-document.querySelectorAll(".tab").button || document.querySelectorAll(".tab").forEach(tab=>{
+document.querySelectorAll(".tab").forEach(tab=>{
     tab.addEventListener("click",()=>{
         document.querySelectorAll(".tab").forEach(btn=>{ btn.classList.remove("active"); });
         tab.classList.add("active");
