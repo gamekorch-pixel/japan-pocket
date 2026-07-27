@@ -144,70 +144,70 @@ food:[
 he:"סושי",
 en:"Sushi",
 jp:"寿司",
-icon:"🍣"
+image:"https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80"
 },
 
 {
 he:"ראמן",
 en:"Ramen",
 jp:"ラーメン",
-icon:"🍜"
+image:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80"
 },
 
 {
 he:"אוניגירי",
 en:"Onigiri",
 jp:"おにぎり",
-icon:"🍙"
+image:"https://images.unsplash.com/photo-1607301459266-3c06f1577732?auto=format&fit=crop&w=600&q=80"
 },
 
 {
 he:"טמפורה",
 en:"Tempura",
 jp:"天ぷら",
-icon:"🍤"
+image:"https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=600&q=80"
 },
 
 {
 he:"גיוזה",
 en:"Gyoza",
 jp:"餃子",
-icon:"🥟"
+image:"https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=600&q=80"
 },
 
 {
 he:"אודון",
 en:"Udon",
 jp:"うどん",
-icon:"🍲"
+image:"https://images.unsplash.com/photo-1618842676088-c4d48a6a7c9d?auto=format&fit=crop&w=600&q=80"
 },
 
 {
 he:"סובה",
 en:"Soba",
 jp:"そば",
-icon:"🍜"
+image:"https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80"
 },
 
 {
 he:"בנטו",
 en:"Bento",
 jp:"弁当",
-icon:"🍱"
+image:"https://images.unsplash.com/photo-1553163147-622ab57be1c9?auto=format&fit=crop&w=600&q=80"
 },
 
 {
 he:"טאקויאקי",
 en:"Takoyaki",
 jp:"たこ焼き",
-icon:"🐙"
+image:"https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=600&q=80"
 },
 
 {
 he:"יאקיטורי",
 en:"Yakitori",
 jp:"焼き鳥",
-icon:"🍢"
+image:"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=600&q=80"
 }
 
 ],
@@ -280,9 +280,9 @@ btn.textContent=original;
 
 function createCard(item){
 
-let iconHtml = "";
-if (currentTab === "food" && item.icon) {
-    iconHtml = `<div style="font-size: 32px; margin-bottom: 6px;" aria-hidden="true">${item.icon}</div>`;
+let imageHtml = "";
+if (currentTab === "food" && item.image) {
+    imageHtml = `<img src="${item.image}" alt="${item.en || item.he}" class="cardFoodImg" loading="lazy">`;
 }
 
 return `
@@ -290,7 +290,7 @@ return `
 <div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}', '${item.en ? item.en.replace(/'/g, "\\'") : ""}', '${item.he.replace(/'/g, "\\'")}')">
 
 <div>
-${iconHtml}
+${imageHtml}
 <div class="cardMain">
 
 <div class="cardText">
@@ -524,20 +524,20 @@ database.emergency = [
 
 ];
 
-// ---------- More Food Data with Icons ----------
+// ---------- More Food Data with Real Photos ----------
 
 database.food.push(
 
-{he:"קארי",en:"Japanese Curry",jp:"カレー",icon:"🍛"},
-{he:"מוצ'י",en:"Mochi",jp:"餅",icon:"🍡"},
-{he:"דנגו",en:"Dango",jp:"団子",icon:"🍡"},
-{he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",icon:"🥞"},
-{he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",icon:"🍝"},
-{he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",icon:"🥩"},
-{he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",icon:"🍲"},
-{he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",icon:"🥘"},
-{he:"אדממה",en:"Edamame",jp:"枝豆",icon:"🌿"},
-{he:"דונבורי",en:"Donburi",jp:"丼",icon:"🍚"}
+{he:"קארי",en:"Japanese Curry",jp:"カレー",image:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80"},
+{he:"מוצ'י",en:"Mochi",jp:"餅",image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
+{he:"דנגו",en:"Dango",jp:"団子",image:"https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"},
+{he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",image:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80"},
+{he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",image:"https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=600&q=80"},
+{he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",image:"https://images.unsplash.com/photo-1604908176997-125f2596f378?auto=format&fit=crop&w=600&q=80"},
+{he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",image:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80"},
+{he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",image:"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80"},
+{he:"אדממה",en:"Edamame",jp:"枝豆",image:"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=600&q=80"},
+{he:"דונבורי",en:"Donburi",jp:"丼",image:"https://images.unsplash.com/photo-1543353071-10c8ba85a904?auto=format&fit=crop&w=600&q=80"}
 
 );
 
@@ -552,7 +552,7 @@ database.phrases.push(
 {he:"איפה התחנה?",en:"Where Is The Station?",jp:"駅はどこですか？",romaji:"Eki wa doko desu ka"},
 {he:"אפשר Wi-Fi?",en:"Do You Have Wi-Fi?",jp:"Wi-Fiはありますか？",romaji:"Wi-Fi wa arimasu ka"},
 {he:"אני לא אוכל בשר",en:"I Don't Eat Meat",jp:"肉を食べません",romaji:"Niku o tabemasen"},
-{he:"אני צמחוני",en:"I'm Vegetarian",jp:"寿司",romaji:"Watashi wa bejitarian desu"},
+{he:"אני צמחוני",en:"I'm Vegetarian",jp:"私はベジタリアンです",romaji:"Watashi wa bejitarian desu"},
 {he:"אני טבעוני",en:"I'm Vegan",jp:"私はヴィーガンです",romaji:"Watashi wa vegan desu"},
 {he:"אפשר תמונה?",en:"Can I Take A Photo?",jp:"写真を撮ってもいいですか？",romaji:"Shashin o totte mo ii desu ka"}
 

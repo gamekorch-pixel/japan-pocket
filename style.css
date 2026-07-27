@@ -313,6 +313,15 @@ main{
 
 }
 
+/* Food Image Style */
+.cardFoodImg {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    margin-bottom: 12px;
+}
+
 /* round play button — shown only on mobile list rows */
 
 .playBtn{
