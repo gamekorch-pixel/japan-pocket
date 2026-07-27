@@ -17,7 +17,7 @@ let clickCounts = {};
 let warningTimeout = null;
 let hasShownWarning = false;
 
-// ניהול מועדפים מתוקן
+// ניהול מועדפים
 let favorites = JSON.parse(localStorage.getItem("japan_pocket_favs")) || [];
 
 // אזהרת ווליום
@@ -176,16 +176,38 @@ if (speakButton) {
     speakButton.addEventListener("click", () => { speak(modalJP.textContent); });
 }
 
-// ניהול מועדפים תקין ורנדור מחדש
-function toggleFavorite(jp) {
+// ניהול מועדפים - כפתור לב
+function toggleFavorite(jp, btnEl) {
     const index = favorites.indexOf(jp);
-    if (index > -1) {
-        favorites.splice(index, 1);
-    } else {
+    const willBeFav = index === -1;
+
+    if (willBeFav) {
         favorites.push(jp);
+    } else {
+        favorites.splice(index, 1);
     }
     localStorage.setItem("japan_pocket_favs", JSON.stringify(favorites));
-    render();
+
+    if (btnEl) {
+        // עדכון מיידי של הכפתור שנלחץ, בלי לרנדר את כל הרשימה מחדש
+        const icon = btnEl.querySelector("i");
+        btnEl.classList.toggle("is-fav", willBeFav);
+        if (icon) {
+            icon.classList.toggle("fa-solid", willBeFav);
+            icon.classList.toggle("fa-regular", !willBeFav);
+        }
+        btnEl.classList.remove("pop");
+        // מפעיל reflow כדי שהאנימציה תרוץ מחדש בכל לחיצה
+        void btnEl.offsetWidth;
+        btnEl.classList.add("pop");
+
+        if (currentTab === "favorites" && !willBeFav) {
+            // הוסר ממועדפים בזמן שמסתכלים על טאב המועדפים - צריך לרנדר מחדש כדי שייעלם
+            render();
+        }
+    } else {
+        render();
+    }
 }
 
 function createCard(item){
@@ -199,7 +221,9 @@ return `
 <div class="cardJp">${item.jp}</div>
 ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
 </div>
-<button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('${item.jp.replace(/'/g, "\\'")}')">${isFav ? '⭐' : '☆'}</button>
+<button class="fav-btn${isFav ? ' is-fav' : ''}" onclick="event.stopPropagation(); toggleFavorite('${item.jp.replace(/'/g, "\\'")}', this)" aria-label="הוסף למועדפים">
+<i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-heart"></i>
+</button>
 <button class="playBtn" onclick="event.stopPropagation(); speak('${item.jp}')" aria-label="השמע">
 <span class="playIcon"></span>
 </button>
@@ -216,7 +240,7 @@ ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
 function renderCards(list){
     content.innerHTML="";
     if(list.length===0){
-        content.innerHTML=`<div class="card" style="text-align:center; grid-column: 1 / -1;"><h2>⭐</h2><p>אין עדיין פריטים במועדפים</p></div>`;
+        content.innerHTML=`<div class="card" style="text-align:center; grid-column: 1 / -1;"><h2 style="font-size:32px;">🤍</h2><p style="margin-top:8px;">אין עדיין פריטים במועדפים</p></div>`;
         return;
     }
     list.forEach(item=>{ content.innerHTML+=createCard(item); });
@@ -247,14 +271,14 @@ document.querySelectorAll(".tab").forEach(tab=>{
     });
 });
 
-// הפעלת מתג מצב כהה תלת-ממד
+// הפעלת מתג מצב כהה (שמש/ירח)
 const darkCheckbox = document.getElementById("darkCheckbox");
 if (darkCheckbox) {
     if (localStorage.getItem("dark_mode") === "true") {
         document.body.classList.add("dark-mode");
         darkCheckbox.checked = true;
     }
-    
+
     darkCheckbox.addEventListener("change", () => {
         if (darkCheckbox.checked) {
             document.body.classList.add("dark-mode");

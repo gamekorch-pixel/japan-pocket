@@ -10,15 +10,16 @@
 </head>
 <body>
 
-<!-- מתג מצב כהה תלת-ממד בסגנון יפני בפינת המסך -->
-<label class="switch" id="darkModeToggle" title="החלף מצב תאורה">
+<!-- מתג מצב יום/לילה - שמש והופכת לירח -->
+<label class="theme-toggle" id="darkModeToggle" title="החלף מצב תאורה">
     <input type="checkbox" id="darkCheckbox">
-    <div class="button">
-        <div class="light"></div>
-        <div class="dots"></div>
-        <div class="characters"></div>
-        <div class="shine"></div>
-        <div class="shadow"></div>
+    <div class="track">
+        <div class="clouds"></div>
+        <div class="stars"></div>
+        <div class="thumb">
+            <i class="fa-solid fa-sun sun-icon"></i>
+            <i class="fa-solid fa-moon moon-icon"></i>
+        </div>
     </div>
 </label>
 
@@ -41,7 +42,7 @@
 <button class="tab" data-tab="transport">🚆<span>תחבורה</span></button>
 <button class="tab" data-tab="shopping">🛍️<span>קניות</span></button>
 <button class="tab" data-tab="emergency">🚨<span>חירום</span></button>
-<button class="tab" data-tab="favorites">⭐<span>מועדפים</span></button>
+<button class="tab" data-tab="favorites">❤️<span>מועדפים</span></button>
 </nav>
 
 <!-- אזור הצגת הכרטיסיות -->
