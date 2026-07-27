@@ -10,31 +10,35 @@
 </head>
 <body>
 
+<!-- כפתור מצב כהה (ירח/שמש) בפינת המסך -->
+<button id="darkModeToggle" style="position: fixed; top: 15px; left: 15px; z-index: 1001; padding: 8px 12px; border-radius: 10px; border: none; background: #e8e8e8; cursor: pointer; font-weight: bold;">🌙/☀️</button>
+
 <header>
 <h1>🇯🇵 Japan Pocket</h1>
 <p>כל מה שצריך לטיול ביפן</p>
-<div class="yen-converter-container">
-    <!-- צד ימין: שדה הקלט לין -->
-    <input type="number" id="yenTopInput" placeholder="הכנס סכום ¥" maxlength="10">
-    
-    <!-- קו הפרדה אנכי באמצע -->
-    <div class="yen-divider"></div>
 
-    <!-- צד שמאל: תצוגת התוצאה בשקלים -->
+<!-- מחשבון המרת ין (חצי-חצי) -->
+<div class="yen-converter-container">
+    <input type="number" id="yenTopInput" placeholder="הכנס סכום ¥" maxlength="10">
+    <div class="yen-divider"></div>
     <div id="yenTopResult">0.00 ₪</div>
 </div>
 </header>
 
+<!-- תפריט הטאבים (כולל טאב מועדפים חדש) -->
 <nav>
 <button class="tab active" data-tab="phrases">🗣️<span>משפטים</span></button>
 <button class="tab" data-tab="food">🍣<span>אוכל</span></button>
 <button class="tab" data-tab="transport">🚆<span>תחבורה</span></button>
 <button class="tab" data-tab="shopping">🛍️<span>קניות</span></button>
 <button class="tab" data-tab="emergency">🚨<span>חירום</span></button>
+<button class="tab" data-tab="favorites">⭐<span>מועדפים</span></button>
 </nav>
 
+<!-- אזור הצגת הכרטיסיות -->
 <main id="content"></main>
 
+<!-- חלון קופץ (מ달) כשלוחצים על מילה -->
 <div id="modal" class="hidden">
 <div class="modalBox">
 <button id="close">✖</button>
@@ -49,18 +53,16 @@
 © 2026 נתנאל קורצ'אגין · <a href="mailto:workforall246@gmail.com">workforall246@gmail.com</a>
 </footer>
 
+<!-- קישור לסקריפט והפעלת עבודה ללא אינטרנט (Service Worker) -->
 <script src="script.js"></script>
-    <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js')
-            .then(() => console.log('Service Worker Registered!'))
-            .catch((err) => console.log('Service Worker Failed:', err));
-        });
-      }
-    </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(() => console.log('Service Worker Registered!'))
+        .catch((err) => console.log('Service Worker Failed:', err));
+    });
+  }
+</script>
 </body>
 </html>
-</body>
-</html>
-

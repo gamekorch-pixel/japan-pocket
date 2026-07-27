@@ -5,19 +5,26 @@
 const content = document.getElementById("content");
 const modal = document.getElementById("modal");
 const modalJP = document.getElementById("modalJP");
+const modalEN = document.getElementById("modalEN");
+const modalHE = document.getElementById("modalHE");
 const speakButton = document.getElementById("speak");
+const closeBtn = document.getElementById("close");
 
 const yenTopInput = document.getElementById("yenTopInput");
 const yenTopResult = document.getElementById("yenTopResult");
 
 let currentTab = "phrases";
 let currentYenRate = 0.024;
+const fallbackYenRate = 0.024;
 
 let clickCounts = {};
 let warningTimeout = null;
 let hasShownWarning = false;
 
-// יצירת אלמנט הודעת אזהרה בעיצוב הכפתור המבוקש
+// ניהול מועדפים מזיכרון המכשיר
+let favorites = JSON.parse(localStorage.getItem("japan_pocket_favs")) || [];
+
+// יצירת אלמנט אזהרת ווליום בעיצוב כפתור מבוקש
 const volumeWarning = document.createElement("div");
 volumeWarning.style.cssText = `
     position: fixed;
@@ -43,9 +50,7 @@ volumeWarning.style.cssText = `
 volumeWarning.textContent = "ייתכן שהווליום במכשיר שלך מכובה או על שקט";
 document.body.appendChild(volumeWarning);
 
-// שער המרה מקומי קבוע במקרה שאין חיבור רשת (Wi-Fi/אינטרנט)
-const fallbackYenRate = 0.024;
-
+// הבאת שער המרה מעודכן (ועבודה גם בלי אינטרנט)
 async function fetchLiveYenRate() {
     try {
         const response = await fetch("https://open.er-api.com/v6/latest/JPY");
@@ -56,12 +61,12 @@ async function fetchLiveYenRate() {
             }
         }
     } catch (e) {
-        // במקרה שאין Wi-Fi או חיבור אינטרנט, המערכת תמשיך לעבוד בצורה מושלמת עם השער המקומי
         currentYenRate = fallbackYenRate;
     }
 }
 fetchLiveYenRate();
 
+// מחשבון ין (עד 10 תווים)
 if (yenTopInput) {
     yenTopInput.setAttribute("maxlength", "10");
     yenTopInput.addEventListener("input", () => {
@@ -73,6 +78,7 @@ if (yenTopInput) {
     });
 }
 
+// מאגר הנתונים של האתר
 const database = {
 phrases:[
 {he:"שלום",en:"Hello",jp:"こんにちは",romaji:"Konnichiwa"},
@@ -86,7 +92,12 @@ phrases:[
 {he:"אני לא מבין",en:"I don't understand",jp:"わかりません",romaji:"Wakarimasen"},
 {he:"אפשר לעזור לי?",en:"Can you help me?",jp:"助けてください",romaji:"Tasukete Kudasai"},
 {he:"איפה השירותים?",en:"Where is the toilet?",jp:"トイレはどこですか？",romaji:"Toire wa Doko Desu Ka"},
-{he:"כמה זה עולה?",en:"How much is it?",jp:"いくらですか？",romaji:"Ikura Desu Ka"}
+{he:"כמה זה עולה?",en:"How much is it?",jp:"いくらですか？",romaji:"Ikura Desu Ka"},
+{he:"אני מישראל",en:"I'm from Israel",jp:"イスラエルから来ました",romaji:"Isuraeru kara kimashita"},
+{he:"אפשר מים?",en:"Water Please",jp:"水をください",romaji:"Mizu o kudasai"},
+{he:"אפשר את החשבון?",en:"The Bill Please",jp:"お会計お願いします",romaji:"Okaikei onegaishimasu"},
+{he:"טעים מאוד",en:"Very Delicious",jp:"とてもおいしいです",romaji:"Totemo oishii desu"},
+{he:"אפשר Wi-Fi?",en:"Do You Have Wi-Fi?",jp:"Wi-Fiはありますか？",romaji:"Wi-Fi wa arimasu ka"}
 ],
 
 food:[
@@ -99,7 +110,9 @@ food:[
 {he:"סובה",en:"Soba",jp:"そば"},
 {he:"בנטו",en:"Bento",jp:"弁当"},
 {he:"טאקויאקי",en:"Takoyaki",jp:"たこ焼き"},
-{he:"יאקיטורי",en:"Yakitori",jp:"焼き鳥"}
+{he:"יאקיטורי",en:"Yakitori",jp:"焼き鳥"},
+{he:"קארי",en:"Japanese Curry",jp:"カレー"},
+{he:"מוצ'י",en:"Mochi",jp:"餅"}
 ],
 
 transport:[
@@ -112,12 +125,7 @@ transport:[
 {he:"מטרו",en:"Metro",jp:"地下鉄"},
 {he:"אוטובוס",en:"Bus",jp:"バス"},
 {he:"מונית",en:"Taxi",jp:"タクシー"},
-{he:"שדה תעופה",en:"Airport",jp:"空港"},
-{he:"כרטיס",en:"Ticket",jp:"切符"},
-{he:"מכונת כרטיסים",en:"Ticket Machine",jp:"券売機"},
-{he:"רכבת אחרונה",en:"Last Train",jp:"終電"},
-{he:"מדרגות נעות",en:"Escalator",jp:"エスカレーター"},
-{he:"מעלית",en:"Elevator",jp:"エレベーター"}
+{he:"שדה תעופה",en:"Airport",jp:"空港"}
 ],
 
 shopping:[
@@ -126,14 +134,6 @@ shopping:[
 {he:"מזומן",en:"Cash",jp:"現金"},
 {he:"קבלה",en:"Receipt",jp:"レシート"},
 {he:"שקית",en:"Bag",jp:"袋"},
-{he:"מבצע",en:"Sale",jp:"セール"},
-{he:"פתוח",en:"Open",jp:"営業中"},
-{he:"סגור",en:"Closed",jp:"閉店"},
-{he:"קטן",en:"Small",jp:"小さい"},
-{he:"בינוני",en:"Medium",jp:"中"},
-{he:"גדול",en:"Large",jp:"大きい"},
-{he:"אני רק מסתכל",en:"Just Looking",jp:"見ているだけです"},
-{he:"אפשר למדוד?",en:"Can I Try It On?",jp:"試着できますか？"},
 {he:"זול",en:"Cheap",jp:"安い"},
 {he:"יקר",en:"Expensive",jp:"高い"}
 ],
@@ -142,20 +142,13 @@ emergency:[
 {he:"משטרה",en:"Police",jp:"警察"},
 {he:"אמבולנס",en:"Ambulance",jp:"救急車"},
 {he:"בית חולים",en:"Hospital",jp:"病院"},
-{he:"בית מרקחת",en:"Pharmacy",jp:"薬局"},
 {he:"רופא",en:"Doctor",jp:"医者"},
 {he:"אני צריך עזרה",en:"Help",jp:"助けてください"},
-{he:"אני חולה",en:"I'm Sick",jp:"気分が悪いです"},
-{he:"אני אלרגי",en:"I Have Allergies",jp:"アレルギーがあります"},
-{he:"אש",en:"Fire",jp:"火事"},
-{he:"סכנה",en:"Danger",jp:"危険"},
-{he:"איבדתי את הדרכון",en:"I Lost My Passport",jp:"パスポートをなくしました"},
-{he:"תתקשר למשטרה",en:"Call The Police",jp:"警察を呼んでください"},
-{he:"תתקשר לאמבולנס",en:"Call An Ambulance",jp:"救急車を呼んでください"}
+{he:"אני חולה",en:"I'm Sick",jp:"気分が悪いです"}
 ]
-
 };
 
+// פונקציית השמעה קולית והתרעת ווליום (מוצגת פעם אחת)
 function speak(text){
 if(!window.speechSynthesis) return;
 
@@ -180,9 +173,22 @@ if(jpVoice){ speech.voice = jpVoice; }
 speechSynthesis.speak(speech);
 }
 
-function openModal(jp) {
-    if(modalJP) modalJP.textContent = jp;
+// ניהול מודל (חלון נפתח ללא X לפי בקשתך)
+function openModal(jpText) {
+    // חיפוש המילה בכל הקטגוריות כדי להציג פרטים מלאים במודל
+    const allItems = [...database.phrases, ...database.food, ...database.transport, ...database.shopping, ...database.emergency];
+    const found = allItems.find(i => i.jp === jpText);
+
+    if (found) {
+        if(modalJP) modalJP.textContent = found.jp;
+        if(modalEN) modalEN.textContent = found.en || "";
+        if(modalHE) modalHE.textContent = found.he || "";
+    }
     if(modal) modal.classList.remove("hidden");
+}
+
+if (closeBtn) {
+    closeBtn.addEventListener("click", () => { modal.classList.add("hidden"); });
 }
 
 if (modal) {
@@ -195,7 +201,21 @@ if (speakButton) {
     speakButton.addEventListener("click", () => { speak(modalJP.textContent); });
 }
 
+// הוספה והסרה ממועדפים
+function toggleFavorite(jp) {
+    const index = favorites.indexOf(jp);
+    if (index > -1) {
+        favorites.splice(index, 1);
+    } else {
+        favorites.push(jp);
+    }
+    localStorage.setItem("japan_pocket_favs", JSON.stringify(favorites));
+    render();
+}
+
+// יצירת עיצוב הכרטיסייה באתר
 function createCard(item){
+let isFav = favorites.includes(item.jp);
 return `
 <div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}')">
 <div style="width: 100%; box-sizing: border-box;">
@@ -205,6 +225,7 @@ return `
 <div class="cardJp">${item.jp}</div>
 ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
 </div>
+<button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('${item.jp.replace(/'/g, "\\'")}')">${isFav ? '⭐' : '☆'}</button>
 <button class="playBtn" onclick="event.stopPropagation(); speak('${item.jp}')" aria-label="השמע">
 <span class="playIcon"></span>
 </button>
@@ -212,7 +233,7 @@ ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
 ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
 </div>
 <div class="buttons" onclick="event.stopPropagation();">
-<button onclick="speak('${item.jp}')">🔊</button>
+<button onclick="speak('${item.jp}')">🔊 השמע</button>
 </div>
 </div>
 `;
@@ -221,22 +242,30 @@ ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
 function renderCards(list){
     content.innerHTML="";
     if(list.length===0){
-        content.innerHTML=`<div class="card"><h2>😕</h2><p>לא נמצאו תוצאות</p></div>`;
+        content.innerHTML=`<div class="card" style="text-align:center;"><h2>😕</h2><p>אין כאן פריטים במועדפים</p></div>`;
         return;
     }
     list.forEach(item=>{ content.innerHTML+=createCard(item); });
 }
 
+// מעבר בין טאבים וסינון המועדפים
 function render(){
+    let list = [];
     switch(currentTab){
-        case "phrases": renderCards(database.phrases); break;
-        case "food": renderCards(database.food); break;
-        case "transport": renderCards(database.transport); break;
-        case "shopping": renderCards(database.shopping); break;
-        case "emergency": renderCards(database.emergency); break;
+        case "phrases": list = database.phrases; break;
+        case "food": list = database.food; break;
+        case "transport": list = database.transport; break;
+        case "shopping": list = database.shopping; break;
+        case "emergency": list = database.emergency; break;
+        case "favorites": 
+            const allItems = [...database.phrases, ...database.food, ...database.transport, ...database.shopping, ...database.emergency];
+            list = allItems.filter(item => favorites.includes(item.jp));
+            break;
     }
+    renderCards(list);
 }
 
+// האזנה ללחיצות על הטאבים בתפריט
 document.querySelectorAll(".tab").forEach(tab=>{
     tab.addEventListener("click",()=>{
         document.querySelectorAll(".tab").forEach(btn=>{ btn.classList.remove("active"); });
@@ -246,30 +275,19 @@ document.querySelectorAll(".tab").forEach(tab=>{
     });
 });
 
-database.food.push(
-  {he:"קארי",en:"Japanese Curry",jp:"カレー"},
-  {he:"מוצ'י",en:"Mochi",jp:"餅"},
-  {he:"דנגו",en:"Dango",jp:"団子"},
-  {he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き"},
-  {he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば"},
-  {he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ"},
-  {he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ"},
-  {he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き"},
-  {he:"אדממה",en:"Edamame",jp:"枝豆"},
-  {he:"דונבורי",en:"Donburi",jp:"丼"}
-);
+// הפעלת מצב כהה (Dark Mode) ושמירתו בזיכרון
+const darkModeToggle = document.getElementById("darkModeToggle");
+if (darkModeToggle) {
+    if (localStorage.getItem("dark_mode") === "true") {
+        document.body.classList.add("dark-mode");
+    }
+    
+    darkModeToggle.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+        const isDark = document.body.classList.contains("dark-mode");
+        localStorage.setItem("dark_mode", isDark);
+    });
+}
 
-database.phrases.push(
-{he:"אני מישראל",en:"I'm from Israel",jp:"イスラエルから来ました",romaji:"Isuraeru kara kimashita"},
-{he:"אפשר מים?",en:"Water Please",jp:"水をください",romaji:"Mizu o kudasai"},
-{he:"אפשר את החשבון?",en:"The Bill Please",jp:"お会計お願いします",romaji:"Okaikei onegaishimasu"},
-{he:"טעים מאוד",en:"Very Delicious",jp:"とてもおいしいです",romaji:"Totemo oishii desu"},
-{he:"איפה התחנה?",en:"Where Is The Station?",jp:"駅はどこですか？",romaji:"Eki wa doko desu ka"},
-{he:"אפשר Wi-Fi?",en:"Do You Have Wi-Fi?",jp:"Wi-Fiはありますか？",romaji:"Wi-Fi wa arimasu ka"},
-{he:"אני לא אוכל בשר",en:"I Don't Eat Meat",jp:"肉を食べません",romaji:"Niku o tabemasen"},
-{he:"אני צמחוני",en:"I'm Vegetarian",jp:"私はベジタリアンです",romaji:"Watashi wa bejitarian desu"},
-{he:"אני טבעוני",en:"I'm Vegan",jp:"私はヴィーガンです",romaji:"Watashi wa vegan desu"},
-{he:"אפשר תמונה?",en:"Can I Take A Photo?",jp:"写真を撮ってもいいですか？",romaji:"Shashin o totte mo ii desu ka"}
-);
-
+// הפעלה ראשונית של הצגת הכרטיסיות
 render();

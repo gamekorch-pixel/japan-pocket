@@ -67,29 +67,53 @@ header p{
     font-size:clamp(14px,3.6vw,18px);
 }
 
-#yenWidgetTop {
+/* עיצוב מחשבון ין חצי-חצי */
+.yen-converter-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    margin-top: 24px;
-    text-align: right;
+    max-width: 400px;
+    border: 2px solid #212121;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.1);
+    margin: 20px auto 0 auto;
 }
 
-#yenWidgetTop label {
-    display: block;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--gray);
+.yen-converter-container input,
+.yen-converter-container div#yenTopResult {
+    flex: 1;
+    width: 50%;
+    padding: 15px 10px;
+    text-align: center;
+    font-size: 17px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-weight: bold;
+    box-sizing: border-box;
 }
 
-#yenTopInput:focus {
-    border-color: var(--red);
-    box-shadow: var(--shadow-sm);
+.yen-divider {
+    width: 2px;
+    height: 30px;
+    background-color: #212121;
+    flex: 0 0 2px !important;
+    padding: 0 !important;
+}
+
+.yen-converter-container input::placeholder {
+    color: #888;
 }
 
 nav{
     width:min(1100px,92%);
     margin:20px auto;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(110px,1fr));
     gap:12px;
 }
 
@@ -106,7 +130,7 @@ nav{
     flex-direction:column;
     align-items:center;
     gap:6px;
-    font-size:20px;
+    font-size:18px;
 }
 
 .tab span{
@@ -194,12 +218,17 @@ main{
     font-size:14px;
 }
 
-.cardFoodImg {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-    border-radius: var(--radius-sm);
-    margin-bottom: 12px;
+/* עיצוב כפתור המועדפים בכרטיסייה */
+.fav-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s;
+}
+.fav-btn:active {
+    transform: scale(1.3);
 }
 
 .playBtn{
@@ -240,11 +269,6 @@ main{
     background:var(--red);
     color:white;
     font-size:17px;
-    transition:opacity .2s;
-}
-
-.buttons button:hover{
-    opacity:.92;
 }
 
 #modal{
@@ -294,16 +318,6 @@ main{
     font-size:clamp(30px,8vw,45px);
 }
 
-#modalEN{
-    margin-top:10px;
-    font-weight:500;
-}
-
-#modalHE{
-    margin-top:4px;
-    color:var(--gray);
-}
-
 #speak{
     width:100%;
     min-height:var(--tap);
@@ -316,10 +330,6 @@ main{
     font-size:17px;
 }
 
-.buttons button.copied{
-    background:#1f8f4d;
-}
-
 #siteFooter{
     text-align:center;
     padding:24px 16px calc(20px + var(--safe-bottom));
@@ -330,6 +340,44 @@ main{
 #siteFooter a{
     color:var(--gray-soft);
     text-decoration:underline;
+}
+
+/* עיצוב מצב כהה (Dark Mode) */
+body.dark-mode {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+body.dark-mode .card {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border-color: #333;
+}
+
+body.dark-mode .yen-converter-container {
+    background: #1e1e1e;
+    border-color: #444;
+}
+
+body.dark-mode .yen-converter-container input,
+body.dark-mode .yen-converter-container div#yenTopResult {
+    color: #e0e0e0;
+}
+
+body.dark-mode .yen-divider {
+    background-color: #444;
+}
+
+body.dark-mode button, 
+body.dark-mode .tab {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    border-color: #444;
+}
+
+body.dark-mode .tab.active {
+    background-color: #ff5252;
+    color: #fff;
 }
 
 @media(max-width:700px){
@@ -354,45 +402,3 @@ main{
         padding:24px 20px calc(24px + var(--safe-bottom));
     }
 }
-.yen-converter-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 400px;
-    border: 2px solid #212121;
-    border-radius: 15px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.1);
-    margin: 0 auto 20px auto;
-}
-
-.yen-converter-container input,
-.yen-converter-container div#yenTopResult {
-    flex: 1;
-    width: 50%;
-    padding: 15px 10px;
-    text-align: center;
-    font-size: 17px;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-family: inherit;
-    font-weight: bold;
-    box-sizing: border-box;
-}
-
-.yen-divider {
-    width: 2px;
-    height: 30px;
-    background-color: #212121;
-    flex: 0 0 2px !important;
-    padding: 0 !important;
-}
-
-.yen-converter-container input::placeholder {
-    color: #888;
-}
-
-
