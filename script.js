@@ -15,9 +15,9 @@ let currentYenRate = 0.024;
 
 let clickCounts = {};
 let warningTimeout = null;
-let hasShownWarning = false; // משתנה כדי לוודא שההודעה תופיע פעם אחת בלבד בכל הפעלת עמוד
+let hasShownWarning = false;
 
-// יצירת אלמנט הודעת אזהרה מעוצב לפי עיצוב הכפתור המבוקש
+// יצירת אלמנט הודעת אזהרה בעיצוב הכפתור המבוקש
 const volumeWarning = document.createElement("div");
 volumeWarning.style.cssText = `
     position: fixed;
@@ -43,6 +43,9 @@ volumeWarning.style.cssText = `
 volumeWarning.textContent = "ייתכן שהווליום במכשיר שלך מכובה או על שקט";
 document.body.appendChild(volumeWarning);
 
+// שער המרה מקומי קבוע במקרה שאין חיבור רשת (Wi-Fi/אינטרנט)
+const fallbackYenRate = 0.024;
+
 async function fetchLiveYenRate() {
     try {
         const response = await fetch("https://open.er-api.com/v6/latest/JPY");
@@ -52,7 +55,10 @@ async function fetchLiveYenRate() {
                 currentYenRate = data.rates.ILS;
             }
         }
-    } catch (e) {}
+    } catch (e) {
+        // במקרה שאין Wi-Fi או חיבור אינטרנט, המערכת תמשיך לעבוד בצורה מושלמת עם השער המקומי
+        currentYenRate = fallbackYenRate;
+    }
 }
 fetchLiveYenRate();
 
@@ -155,7 +161,6 @@ if(!window.speechSynthesis) return;
 
 clickCounts[text] = (clickCounts[text] || 0) + 1;
 
-// הצגת האזהרה פעם אחת בלבד בכל הפעלת עמוד
 if(clickCounts[text] >= 3 && !hasShownWarning){
     hasShownWarning = true;
     volumeWarning.style.display = "block";
