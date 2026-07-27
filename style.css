@@ -354,3 +354,43 @@ main{
         padding:24px 20px calc(24px + var(--safe-bottom));
     }
 }
+.yen-converter-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 400px;
+    border: 2px solid #212121;
+    border-radius: 15px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.1);
+    margin: 0 auto 20px auto;
+}
+
+.yen-converter-container input,
+.yen-converter-container div#yenTopResult {
+    flex: 1;
+    width: 50%;
+    padding: 15px 10px;
+    text-align: center;
+    font-size: 17px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: inherit;
+    font-weight: bold;
+    box-sizing: border-box;
+}
+
+.yen-divider {
+    width: 2px;
+    height: 30px;
+    background-color: #212121;
+    flex: 0 0 2px !important;
+    padding: 0 !important;
+}
+
+.yen-converter-container input::placeholder {
+    color: #888;
+}
