@@ -4,7 +4,7 @@
 
 const content = document.getElementById("content");
 const modal = document.getElementById("modal");
-const speakButton = document.getElementById("speak");
+const modalJP = document.getElementById("modalJP");
 const closeButton = document.getElementById("close");
 
 const yenTopInput = document.getElementById("yenTopInput");
@@ -12,6 +12,16 @@ const yenTopResult = document.getElementById("yenTopResult");
 
 let currentTab = "phrases";
 let currentYenRate = 0.024;
+
+// משתנים למעקב אחר לחיצות שגויות על סאונד
+let clickCounts = {};
+let warningTimeout = null;
+
+// יצירת אלמנט הודעת אזהרה דינמית לווליום
+const volumeWarning = document.createElement("div");
+volumeWarning.style.cssText = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:10px 20px; border-radius:8px; font-size:14px; z-index:1000; display:none; box-shadow:0 4px 10px rgba(0,0,0,0.3); direction:rtl;";
+volumeWarning.textContent = "ייתכן שהווליום במכשיר שלך מכובה או על שקט";
+document.body.appendChild(volumeWarning);
 
 async function fetchLiveYenRate() {
     try {
@@ -50,74 +60,85 @@ phrases:[
 ],
 
 food:[
-{he:"סושי",en:"Sushi",jp:"寿司",image:"🍣"},
-{he:"ראמן",en:"Ramen",jp:"ラーメン",image:"🍜"},
-{he:"אוניגירי",en:"Onigiri",jp:"おにぎり",image:"🍙"},
-{he:"טמפורה",en:"Tempura",jp:"天ぷら",image:"🍤"},
-{he:"גיוזה",en:"Gyoza",jp:"餃子",image:"🥟"},
-{he:"אודון",en:"Udon",jp:"うどん",image:"🍜"},
-{he:"סובה",en:"Soba",jp:"そば",image:"🍜"},
-{he:"בנטו",en:"Bento",jp:"弁当",image:"🍱"},
-{he:"טאקויאקי",en:"Takoyaki",jp:"たこ焼き",image:"🐙"},
-{he:"יאקיטורי",en:"Yakitori",jp:"焼き鳥",image:"🍢"}
+{he:"סושי",en:"Sushi",jp:"寿司"},
+{he:"ראמן",en:"Ramen",jp:"ラーメン"},
+{he:"אוניגירי",en:"Onigiri",jp:"おにぎり"},
+{he:"טמפורה",en:"Tempura",jp:"天ぷら"},
+{he:"גיוזה",en:"Gyoza",jp:"餃子"},
+{he:"אודון",en:"Udon",jp:"うどん"},
+{he:"סובה",en:"Soba",jp:"そば"},
+{he:"בנטו",en:"Bento",jp:"弁当"},
+{he:"טאקויאקי",en:"Takoyaki",jp:"たこ焼き"},
+{he:"יאקיטורי",en:"Yakitori",jp:"焼き鳥"}
 ],
 
 transport:[
-{he:"רכבת",en:"Train",jp:"電車",image:"🚆"},
-{he:"תחנה",en:"Station",jp:"駅",image:"🚉"},
-{he:"רציף",en:"Platform",jp:"ホーム",image:"🛑"},
-{he:"יציאה",en:"Exit",jp:"出口",image:"🚪"},
-{he:"כניסה",en:"Entrance",jp:"入口",image:"🚪"},
-{he:"שינקנסן",en:"Shinkansen",jp:"新幹線",image:"🚄"},
-{he:"מטרו",en:"Metro",jp:"地下鉄",image:"🚇"},
-{he:"אוטובוס",en:"Bus",jp:"バス",image:"🚌"},
-{he:"מונית",en:"Taxi",jp:"タクシー",image:"🚕"},
-{he:"שדה תעופה",en:"Airport",jp:"空港",image:"✈️"},
-{he:"כרטיס",en:"Ticket",jp:"切符",image:"🎫"},
-{he:"מכונת כרטיסים",en:"Ticket Machine",jp:"券売機",image:"🖨️"},
-{he:"רכבת אחרונה",en:"Last Train",jp:"終電",image:"🌙"},
-{he:"מדרגות נעות",en:"Escalator",jp:"エスカレーター",image:"🛝"},
-{he:"מעלית",en:"Elevator",jp:"エレベーター",image:"🛗"}
+{he:"רכבת",en:"Train",jp:"電車"},
+{he:"תחנה",en:"Station",jp:"駅"},
+{he:"רציף",en:"Platform",jp:"ホーム"},
+{he:"יציאה",en:"Exit",jp:"出口"},
+{he:"כניסה",en:"Entrance",jp:"入口"},
+{he:"שינקנסן",en:"Shinkansen",jp:"新幹線"},
+{he:"מטרו",en:"Metro",jp:"地下鉄"},
+{he:"אוטובוס",en:"Bus",jp:"バス"},
+{he:"מונית",en:"Taxi",jp:"タクシー"},
+{he:"שדה תעופה",en:"Airport",jp:"空港"},
+{he:"כרטיס",en:"Ticket",jp:"切符"},
+{he:"מכונת כרטיסים",en:"Ticket Machine",jp:"券売機"},
+{he:"רכבת אחרונה",en:"Last Train",jp:"終電"},
+{he:"מדרגות נעות",en:"Escalator",jp:"エスカレーター"},
+{he:"מעלית",en:"Elevator",jp:"エレベーター"}
 ],
 
 shopping:[
-{he:"כמה זה עולה?",en:"How much?",jp:"いくらですか？",image:"💰"},
-{he:"כרטיס אשראי",en:"Credit Card",jp:"クレジットカード",image:"💳"},
-{he:"מזומן",en:"Cash",jp:"現金",image:"💵"},
-{he:"קבלה",en:"Receipt",jp:"レシート",image:"🧾"},
-{he:"שקית",en:"Bag",jp:"袋",image:"🛍️"},
-{he:"מבצע",en:"Sale",jp:"セール",image:"🏷️"},
-{he:"פתוח",en:"Open",jp:"営業中",image:"🟢"},
-{he:"סגור",en:"Closed",jp:"閉店",image:"🔴"},
-{he:"קטן",en:"Small",jp:"小さい",image:"🔹"},
-{he:"בינוני",en:"Medium",jp:"中",image:"🔸"},
-{he:"גדול",en:"Large",jp:"大きい",image:"🔶"},
-{he:"אני רק מסתכל",en:"Just Looking",jp:"見ているだけです",image:"👀"},
-{he:"אפשר למדוד?",en:"Can I Try It On?",jp:"試着できますか？",image:"👕"},
-{he:"זול",en:"Cheap",jp:"安い",image:"📉"},
-{he:"יקר",en:"Expensive",jp:"高い",image:"📈"}
+{he:"כמה זה עולה?",en:"How much?",jp:"いくらですか？"},
+{he:"כרטיס אשראי",en:"Credit Card",jp:"クレジットカード"},
+{he:"מזומן",en:"Cash",jp:"現金"},
+{he:"קבלה",en:"Receipt",jp:"レシート"},
+{he:"שקית",en:"Bag",jp:"袋"},
+{he:"מבצע",en:"Sale",jp:"セール"},
+{he:"פתוח",en:"Open",jp:"営業中"},
+{he:"סגור",en:"Closed",jp:"閉店"},
+{he:"קטן",en:"Small",jp:"小さい"},
+{he:"בינוני",en:"Medium",jp:"中"},
+{he:"גדול",en:"Large",jp:"大きい"},
+{he:"אני רק מסתכל",en:"Just Looking",jp:"見ているだけです"},
+{he:"אפשר למדוד?",en:"Can I Try It On?",jp:"試着できますか？"},
+{he:"זול",en:"Cheap",jp:"安い"},
+{he:"יקר",en:"Expensive",jp:"高い"}
 ],
 
 emergency:[
-{he:"משטרה",en:"Police",jp:"警察",image:"👮‍♂️"},
-{he:"אמבולנס",en:"Ambulance",jp:"救急車",image:"🚑"},
-{he:"בית חולים",en:"Hospital",jp:"病院",image:"🏥"},
-{he:"בית מרקחת",en:"Pharmacy",jp:"薬局",image:"💊"},
-{he:"רופא",en:"Doctor",jp:"医者",image:"👨‍⚕️"},
-{he:"אני צריך עזרה",en:"Help",jp:"助けてください",image:"🆘"},
-{he:"אני חולה",en:"I'm Sick",jp:"気分が悪いです",image:"🤒"},
-{he:"אני אלרגי",en:"I Have Allergies",jp:"アレルギーがあります",image:"⚠️"},
-{he:"אש",en:"Fire",jp:"火事",image:"🔥"},
-{he:"סכנה",en:"Danger",jp:"危険",image:"⚠️"},
-{he:"איבדתי את הדרכון",en:"I Lost My Passport",jp:"パスポートをなくしました",image:"🛂"},
-{he:"תתקשר למשטרה",en:"Call The Police",jp:"警察を呼んでください",image:"🚨"},
-{he:"תתקשר לאמבולנס",en:"Call An Ambulance",jp:"救急車を呼んでください",image:"🚑"}
+{he:"משטרה",en:"Police",jp:"警察"},
+{he:"אמבולנס",en:"Ambulance",jp:"救急車"},
+{he:"בית חולים",en:"Hospital",jp:"病院"},
+{he:"בית מרקחת",en:"Pharmacy",jp:"薬局"},
+{he:"רופא",en:"Doctor",jp:"医者"},
+{he:"אני צריך עזרה",en:"Help",jp:"助けてください"},
+{he:"אני חולה",en:"I'm Sick",jp:"気分が悪いです"},
+{he:"אני אלרגי",en:"I Have Allergies",jp:"アレルギーがあります"},
+{he:"אש",en:"Fire",jp:"火事"},
+{he:"סכנה",en:"Danger",jp:"危険"},
+{he:"איבדתי את הדרכון",en:"I Lost My Passport",jp:"パスポートをなくしました"},
+{he:"תתקשר למשטרה",en:"Call The Police",jp:"警察を呼んでください"},
+{he:"תתקשר לאמבולנס",en:"Call An Ambulance",jp:"救急車を呼んでください"}
 ]
 
 };
 
 function speak(text){
 if(!window.speechSynthesis) return;
+
+// מעקב אחר כמות הלחיצות על אותו הטקסט
+clickCounts[text] = (clickCounts[text] || 0) + 1;
+if(clickCounts[text] > 3){
+    volumeWarning.style.display = "block";
+    if(warningTimeout) clearTimeout(warningTimeout);
+    warningTimeout = setTimeout(()=>{
+        volumeWarning.style.display = "none";
+    }, 4000);
+}
+
 speechSynthesis.cancel();
 const speech = new SpeechSynthesisUtterance(text);
 speech.lang = "ja-JP";
@@ -128,29 +149,38 @@ if(jpVoice){ speech.voice = jpVoice; }
 speechSynthesis.speak(speech);
 }
 
-function createCard(item){
-let imageHtml = "";
-if (item.image) {
-    imageHtml = `<div style="font-size: 40px; text-align: center; margin-bottom: 12px;">${item.image}</div>`;
+function openModal(jp) {
+    if(modalJP) modalJP.textContent = jp;
+    if(modal) modal.classList.remove("hidden");
 }
 
+if (closeButton) {
+    closeButton.addEventListener("click", () => { modal.classList.add("hidden"); });
+}
+
+if (modal) {
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) { modal.classList.add("hidden"); }
+    });
+}
+
+function createCard(item){
 return `
-<div class="card">
+<div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}')">
 <div>
-${imageHtml}
 <div class="cardMain">
 <div class="cardText">
 <div class="cardHe">${item.he}</div>
 <div class="cardJp">${item.jp}</div>
 ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
 </div>
-<button class="playBtn" onclick="speak('${item.jp}')" aria-label="השמע">
+<button class="playBtn" onclick="event.stopPropagation(); speak('${item.jp}')" aria-label="השמע">
 <span class="playIcon"></span>
 </button>
 </div>
 ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
 </div>
-<div class="buttons">
+<div class="buttons" onclick="event.stopPropagation();">
 <button onclick="speak('${item.jp}')">🔊</button>
 </div>
 </div>
@@ -185,31 +215,30 @@ document.querySelectorAll(".tab").forEach(tab=>{
     });
 });
 
-// הוספת מאכלים נוספים עם אימוג'י
 database.food.push(
-  {he:"קארי",en:"Japanese Curry",jp:"カレー",image:"🍛"},
-  {he:"מוצ'י",en:"Mochi",jp:"餅",image:"🍡"},
-  {he:"דנגו",en:"Dango",jp:"団子",image:"🍡"},
-  {he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",image:"🥞"},
-  {he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",image:"🍜"},
-  {he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",image:"🥩"},
-  {he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",image:"🍲"},
-  {he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",image:"🍲"},
-  {he:"אדממה",en:"Edamame",jp:"枝豆",image:"🫛"},
-  {he:"דונבורי",en:"Donburi",jp:"丼",image:"🍚"}
+  {he:"קארי",en:"Japanese Curry",jp:"カレー"},
+  {he:"מוצ'י",en:"Mochi",jp:"餅"},
+  {he:"דנגו",en:"Dango",jp:"団子"},
+  {he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き"},
+  {he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば"},
+  {he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ"},
+  {he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ"},
+  {he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き"},
+  {he:"אדממה",en:"Edamame",jp:"枝豆"},
+  {he:"דונבורי",en:"Donburi",jp:"丼"}
 );
 
 database.phrases.push(
-{he:"אני מישראל",en:"I'm from Israel",jp:"イスラエルから来ました",romaji:"Isuraeru kara kimashita",image:"🇮🇱"},
-{he:"אפשר מים?",en:"Water Please",jp:"水をください",romaji:"Mizu o kudasai",image:"💧"},
-{he:"אפשר את החשבון?",en:"The Bill Please",jp:"お会計お願いします",romaji:"Okaikei onegaishimasu",image:"🧾"},
-{he:"טעים מאוד",en:"Very Delicious",jp:"とてもおいしいです",romaji:"Totemo oishii desu",image:"😋"},
-{he:"איפה התחנה?",en:"Where Is The Station?",jp:"駅はどこですか？",romaji:"Eki wa doko desu ka",image:"🚉"},
-{he:"אפשר Wi-Fi?",en:"Do You Have Wi-Fi?",jp:"Wi-Fiはありますか？",romaji:"Wi-Fi wa arimasu ka",image:"📶"},
-{he:"אני לא אוכל בשר",en:"I Don't Eat Meat",jp:"肉を食べません",romaji:"Niku o tabemasen",image:"🥗"},
-{he:"אני צמחוני",en:"I'm Vegetarian",jp:"私はベジタリアンです",romaji:"Watashi wa bejitarian desu",image:"🥕"},
-{he:"אני טבעוני",en:"I'm Vegan",jp:"私はヴィーガンです",romaji:"Watashi wa vegan desu",image:"🌱"},
-{he:"אפשר תמונה?",en:"Can I Take A Photo?",jp:"写真を撮ってもいいですか？",romaji:"Shashin o totte mo ii desu ka",image:"📸"}
+{he:"אני מישראל",en:"I'm from Israel",jp:"イスラエルから来ました",romaji:"Isuraeru kara kimashita"},
+{he:"אפשר מים?",en:"Water Please",jp:"水をください",romaji:"Mizu o kudasai"},
+{he:"אפשר את החשבון?",en:"The Bill Please",jp:"お会計お願いします",romaji:"Okaikei onegaishimasu"},
+{he:"טעים מאוד",en:"Very Delicious",jp:"とてもおいしいです",romaji:"Totemo oishii desu"},
+{he:"איפה התחנה?",en:"Where Is The Station?",jp:"駅はどこですか？",romaji:"Eki wa doko desu ka"},
+{he:"אפשר Wi-Fi?",en:"Do You Have Wi-Fi?",jp:"Wi-Fiはありますか？",romaji:"Wi-Fi wa arimasu ka"},
+{he:"אני לא אוכל בשר",en:"I Don't Eat Meat",jp:"肉を食べません",romaji:"Niku o tabemasen"},
+{he:"אני צמחוני",en:"I'm Vegetarian",jp:"私はベジタリアンです",romaji:"Watashi wa bejitarian desu"},
+{he:"אני טבעוני",en:"I'm Vegan",jp:"私はヴィーガンです",romaji:"Watashi wa vegan desu"},
+{he:"אפשר תמונה?",en:"Can I Take A Photo?",jp:"写真を撮ってもいいですか？",romaji:"Shashin o totte mo ii desu ka"}
 );
 
-render(); צ
+render();
