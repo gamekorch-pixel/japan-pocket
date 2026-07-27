@@ -10,16 +10,23 @@
 </head>
 <body>
 
+<!-- מתג מצב כהה תלת-ממד בסגנון יפני בפינת המסך -->
+<label class="switch" id="darkModeToggle" title="החלף מצב תאורה">
+    <input type="checkbox" id="darkCheckbox">
+    <div class="button">
+        <div class="light"></div>
+        <div class="dots"></div>
+        <div class="characters"></div>
+        <div class="shine"></div>
+        <div class="shadow"></div>
+    </div>
+</label>
+
 <header>
 <h1>🇯🇵 Japan Pocket</h1>
 <p>כל מה שצריך לטיול ביפן</p>
 
-<!-- המתג המדויק מ-Uiverse -->
-<div class="switch-container">
-    <input class="l" type="checkbox" id="darkCheckbox" title="החלף מצב תאורה" />
-</div>
-
-<!-- מחשבון ין -->
+<!-- מחשבון המרת ין -->
 <div class="yen-converter-container">
     <input type="number" id="yenTopInput" placeholder="הכנס סכום ¥" maxlength="10">
     <div class="yen-divider"></div>
@@ -56,5 +63,14 @@
 </footer>
 
 <script src="script.js"></script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(() => console.log('Service Worker Registered!'))
+        .catch((err) => console.log('Service Worker Failed:', err));
+    });
+  }
+</script>
 </body>
 </html>
