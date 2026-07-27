@@ -10,14 +10,23 @@
 </head>
 <body>
 
-<!-- כפתור מצב כהה (ירח/שמש) בפינת המסך -->
-<button id="darkModeToggle" style="position: fixed; top: 15px; left: 15px; z-index: 1001; padding: 8px 12px; border-radius: 10px; border: none; background: #e8e8e8; cursor: pointer; font-weight: bold;">🌙/☀️</button>
+<!-- מתג מצב כהה תלת-ממד בסגנון יפני בפינת המסך -->
+<label class="switch" id="darkModeToggle" title="החלף מצב תאורה">
+    <input type="checkbox" id="darkCheckbox">
+    <div class="button">
+        <div class="light"></div>
+        <div class="dots"></div>
+        <div class="characters"></div>
+        <div class="shine"></div>
+        <div class="shadow"></div>
+    </div>
+</label>
 
 <header>
 <h1>🇯🇵 Japan Pocket</h1>
 <p>כל מה שצריך לטיול ביפן</p>
 
-<!-- מחשבון המרת ין (חצי-חצי) -->
+<!-- מחשבון המרת ין -->
 <div class="yen-converter-container">
     <input type="number" id="yenTopInput" placeholder="הכנס סכום ¥" maxlength="10">
     <div class="yen-divider"></div>
@@ -25,7 +34,7 @@
 </div>
 </header>
 
-<!-- תפריט הטאבים (כולל טאב מועדפים חדש) -->
+<!-- תפריט הטאבים -->
 <nav>
 <button class="tab active" data-tab="phrases">🗣️<span>משפטים</span></button>
 <button class="tab" data-tab="food">🍣<span>אוכל</span></button>
@@ -38,7 +47,7 @@
 <!-- אזור הצגת הכרטיסיות -->
 <main id="content"></main>
 
-<!-- חלון קופץ (מ달) כשלוחצים על מילה -->
+<!-- חלון קופץ -->
 <div id="modal" class="hidden">
 <div class="modalBox">
 <button id="close">✖</button>
@@ -53,7 +62,6 @@
 © 2026 נתנאל קורצ'אגין · <a href="mailto:workforall246@gmail.com">workforall246@gmail.com</a>
 </footer>
 
-<!-- קישור לסקריפט והפעלת עבודה ללא אינטרנט (Service Worker) -->
 <script src="script.js"></script>
 <script>
   if ('serviceWorker' in navigator) {

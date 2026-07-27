@@ -1,7 +1,3 @@
-// ===============================
-// 🇯🇵 JAPAN POCKET 2.0
-// ===============================
-
 const content = document.getElementById("content");
 const modal = document.getElementById("modal");
 const modalJP = document.getElementById("modalJP");
@@ -21,10 +17,10 @@ let clickCounts = {};
 let warningTimeout = null;
 let hasShownWarning = false;
 
-// ניהול מועדפים מזיכרון המכשיר
+// ניהול מועדפים מתוקן
 let favorites = JSON.parse(localStorage.getItem("japan_pocket_favs")) || [];
 
-// יצירת אלמנט אזהרת ווליום בעיצוב כפתור מבוקש
+// אזהרת ווליום
 const volumeWarning = document.createElement("div");
 volumeWarning.style.cssText = `
     position: fixed;
@@ -32,25 +28,20 @@ volumeWarning.style.cssText = `
     left: 50%;
     transform: translateX(-50%);
     padding: 15px 25px;
-    border: unset;
     border-radius: 15px;
     color: #212121;
     z-index: 1000;
     background: #e8e8e8;
-    font-weight: 1000;
+    font-weight: bold;
     font-size: 17px;
     box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-    transition: all 250ms;
-    overflow: hidden;
     display: none;
     direction: rtl;
     text-align: center;
-    cursor: default;
 `;
 volumeWarning.textContent = "ייתכן שהווליום במכשיר שלך מכובה או על שקט";
 document.body.appendChild(volumeWarning);
 
-// הבאת שער המרה מעודכן (ועבודה גם בלי אינטרנט)
 async function fetchLiveYenRate() {
     try {
         const response = await fetch("https://open.er-api.com/v6/latest/JPY");
@@ -66,9 +57,7 @@ async function fetchLiveYenRate() {
 }
 fetchLiveYenRate();
 
-// מחשבון ין (עד 10 תווים)
 if (yenTopInput) {
-    yenTopInput.setAttribute("maxlength", "10");
     yenTopInput.addEventListener("input", () => {
         if(yenTopInput.value.length > 10) {
             yenTopInput.value = yenTopInput.value.slice(0, 10);
@@ -78,7 +67,6 @@ if (yenTopInput) {
     });
 }
 
-// מאגר הנתונים של האתר
 const database = {
 phrases:[
 {he:"שלום",en:"Hello",jp:"こんにちは",romaji:"Konnichiwa"},
@@ -99,7 +87,6 @@ phrases:[
 {he:"טעים מאוד",en:"Very Delicious",jp:"とてもおいしいです",romaji:"Totemo oishii desu"},
 {he:"אפשר Wi-Fi?",en:"Do You Have Wi-Fi?",jp:"Wi-Fiはありますか？",romaji:"Wi-Fi wa arimasu ka"}
 ],
-
 food:[
 {he:"סושי",en:"Sushi",jp:"寿司"},
 {he:"ראמן",en:"Ramen",jp:"ラーメン"},
@@ -114,7 +101,6 @@ food:[
 {he:"קארי",en:"Japanese Curry",jp:"カレー"},
 {he:"מוצ'י",en:"Mochi",jp:"餅"}
 ],
-
 transport:[
 {he:"רכבת",en:"Train",jp:"電車"},
 {he:"תחנה",en:"Station",jp:"駅"},
@@ -127,7 +113,6 @@ transport:[
 {he:"מונית",en:"Taxi",jp:"タクシー"},
 {he:"שדה תעופה",en:"Airport",jp:"空港"}
 ],
-
 shopping:[
 {he:"כמה זה עולה?",en:"How much?",jp:"いくらですか？"},
 {he:"כרטיס אשראי",en:"Credit Card",jp:"クレジットカード"},
@@ -137,7 +122,6 @@ shopping:[
 {he:"זול",en:"Cheap",jp:"安い"},
 {he:"יקר",en:"Expensive",jp:"高い"}
 ],
-
 emergency:[
 {he:"משטרה",en:"Police",jp:"警察"},
 {he:"אמבולנס",en:"Ambulance",jp:"救急車"},
@@ -148,21 +132,15 @@ emergency:[
 ]
 };
 
-// פונקציית השמעה קולית והתרעת ווליום (מוצגת פעם אחת)
 function speak(text){
 if(!window.speechSynthesis) return;
-
 clickCounts[text] = (clickCounts[text] || 0) + 1;
-
 if(clickCounts[text] >= 3 && !hasShownWarning){
     hasShownWarning = true;
     volumeWarning.style.display = "block";
     if(warningTimeout) clearTimeout(warningTimeout);
-    warningTimeout = setTimeout(()=>{
-        volumeWarning.style.display = "none";
-    }, 4000);
+    warningTimeout = setTimeout(()=>{ volumeWarning.style.display = "none"; }, 4000);
 }
-
 speechSynthesis.cancel();
 const speech = new SpeechSynthesisUtterance(text);
 speech.lang = "ja-JP";
@@ -173,12 +151,9 @@ if(jpVoice){ speech.voice = jpVoice; }
 speechSynthesis.speak(speech);
 }
 
-// ניהול מודל (חלון נפתח ללא X לפי בקשתך)
 function openModal(jpText) {
-    // חיפוש המילה בכל הקטגוריות כדי להציג פרטים מלאים במודל
     const allItems = [...database.phrases, ...database.food, ...database.transport, ...database.shopping, ...database.emergency];
     const found = allItems.find(i => i.jp === jpText);
-
     if (found) {
         if(modalJP) modalJP.textContent = found.jp;
         if(modalEN) modalEN.textContent = found.en || "";
@@ -201,7 +176,7 @@ if (speakButton) {
     speakButton.addEventListener("click", () => { speak(modalJP.textContent); });
 }
 
-// הוספה והסרה ממועדפים
+// ניהול מועדפים תקין ורנדור מחדש
 function toggleFavorite(jp) {
     const index = favorites.indexOf(jp);
     if (index > -1) {
@@ -213,7 +188,6 @@ function toggleFavorite(jp) {
     render();
 }
 
-// יצירת עיצוב הכרטיסייה באתר
 function createCard(item){
 let isFav = favorites.includes(item.jp);
 return `
@@ -242,13 +216,12 @@ ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
 function renderCards(list){
     content.innerHTML="";
     if(list.length===0){
-        content.innerHTML=`<div class="card" style="text-align:center;"><h2>😕</h2><p>אין כאן פריטים במועדפים</p></div>`;
+        content.innerHTML=`<div class="card" style="text-align:center; grid-column: 1 / -1;"><h2>⭐</h2><p>אין עדיין פריטים במועדפים</p></div>`;
         return;
     }
     list.forEach(item=>{ content.innerHTML+=createCard(item); });
 }
 
-// מעבר בין טאבים וסינון המועדפים
 function render(){
     let list = [];
     switch(currentTab){
@@ -265,7 +238,6 @@ function render(){
     renderCards(list);
 }
 
-// האזנה ללחיצות על הטאבים בתפריט
 document.querySelectorAll(".tab").forEach(tab=>{
     tab.addEventListener("click",()=>{
         document.querySelectorAll(".tab").forEach(btn=>{ btn.classList.remove("active"); });
@@ -275,19 +247,23 @@ document.querySelectorAll(".tab").forEach(tab=>{
     });
 });
 
-// הפעלת מצב כהה (Dark Mode) ושמירתו בזיכרון
-const darkModeToggle = document.getElementById("darkModeToggle");
-if (darkModeToggle) {
+// הפעלת מתג מצב כהה תלת-ממד
+const darkCheckbox = document.getElementById("darkCheckbox");
+if (darkCheckbox) {
     if (localStorage.getItem("dark_mode") === "true") {
         document.body.classList.add("dark-mode");
+        darkCheckbox.checked = true;
     }
     
-    darkModeToggle.addEventListener("click", () => {
-        document.body.classList.toggle("dark-mode");
-        const isDark = document.body.classList.contains("dark-mode");
-        localStorage.setItem("dark_mode", isDark);
+    darkCheckbox.addEventListener("change", () => {
+        if (darkCheckbox.checked) {
+            document.body.classList.add("dark-mode");
+            localStorage.setItem("dark_mode", "true");
+        } else {
+            document.body.classList.remove("dark-mode");
+            localStorage.setItem("dark_mode", "false");
+        }
     });
 }
 
-// הפעלה ראשונית של הצגת הכרטיסיות
 render();
