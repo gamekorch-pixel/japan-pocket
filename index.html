@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Japan Pocket</title>
+<title>🇯🇵 Japan Pocket</title>
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -11,17 +11,19 @@
 <body>
 
 <header>
-<div class="header-top">
-    <!-- מתג מצב הלילה הקטן בפינה השמאלית -->
-    <input class="l" type="checkbox" id="darkCheckbox" title="החלף מצב לילה" />
+<h1>🇯🇵 Japan Pocket</h1>
+<p>כל מה שצריך לטיול ביפן</p>
+
+<!-- המתג המדויק מ-Uiverse -->
+<div class="switch-container">
+    <input class="l" type="checkbox" id="darkCheckbox" title="החלף מצב תאורה" />
 </div>
-<h1>japan pocket</h1>
 
 <!-- מחשבון ין -->
 <div class="yen-converter-container">
-    <div id="yenTopResult">0.00 ₪</div>
-    <div class="yen-divider"></div>
     <input type="number" id="yenTopInput" placeholder="הכנס סכום ¥" maxlength="10">
+    <div class="yen-divider"></div>
+    <div id="yenTopResult">0.00 ₪</div>
 </div>
 </header>
 

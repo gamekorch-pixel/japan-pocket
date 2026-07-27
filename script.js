@@ -157,14 +157,17 @@ function createCard(item){
     let isFav = favorites.includes(item.jp);
     return `
     <div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}')">
-        <div class="card-left">
-            <button class="speak-card-btn" onclick="event.stopPropagation(); speak('${item.jp.replace(/'/g, "\\'")}')" title="השמע">🔊</button>
+        <div class="cardMain">
+            <div class="cardText">
+                <div class="cardHe">${item.he}</div>
+                <div class="cardJp">${item.jp}</div>
+                ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
+            </div>
             <button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('${item.jp.replace(/'/g, "\\'")}')">${isFav ? '⭐' : '☆'}</button>
         </div>
-        <div class="cardText">
-            <div class="cardHe">${item.he}</div>
-            <div class="cardJp">${item.jp}</div>
-            ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
+        ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
+        <div class="buttons" onclick="event.stopPropagation();">
+            <button onclick="speak('${item.jp}')">🔊 השמע</button>
         </div>
     </div>
     `;
@@ -173,7 +176,7 @@ function createCard(item){
 function renderCards(list){
     content.innerHTML="";
     if(list.length===0){
-        content.innerHTML=`<div class="card" style="text-align:center; justify-content:center;"><div><h2>⭐</h2><p>אין עדיין פריטים במועדפים</p></div></div>`;
+        content.innerHTML=`<div class="card" style="text-align:center; grid-column: 1 / -1;"><h2>⭐</h2><p>אין עדיין פריטים במועדפים</p></div>`;
         return;
     }
     list.forEach(item=>{ content.innerHTML+=createCard(item); });
