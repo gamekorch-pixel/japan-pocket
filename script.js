@@ -4,9 +4,6 @@
 
 const content = document.getElementById("content");
 const modal = document.getElementById("modal");
-const modalJP = document.getElementById("modalJP");
-const modalEN = document.getElementById("modalEN");
-const modalHE = document.getElementById("modalHE");
 const speakButton = document.getElementById("speak");
 const closeButton = document.getElementById("close");
 
@@ -53,21 +50,70 @@ phrases:[
 ],
 
 food:[
-{he:"סושי",en:"Sushi",jp:"寿司",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-sushi-japan-flat-juicy-fish.png"},
-{he:"ראמן",en:"Ramen",jp:"ラーメン",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-ramen-japan-flat-juicy-fish.png"},
-{he:"אוניגירי",en:"Onigiri",jp:"おにぎり",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-onigiri-japan-flat-juicy-fish.png"},
-{he:"טמפורה",en:"Tempura",jp:"天ぷら",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-tempura-japan-flat-juicy-fish.png"},
-{he:"גיוזה",en:"Gyoza",jp:"餃子",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-dumplings-japan-flat-juicy-fish.png"},
-{he:"אודון",en:"Udon",jp:"うどん",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-noodles-japan-flat-juicy-fish.png"},
-{he:"סובה",en:"Soba",jp:"そば",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-soba-japan-flat-juicy-fish.png"},
-{he:"בנטו",en:"Bento",jp:"弁当",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-bento-japan-flat-juicy-fish.png"},
-{he:"טאקויאקי",en:"Takoyaki",jp:"たこ焼き",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-takoyaki-japan-flat-juicy-fish.png"},
-{he:"יאקיטורי",en:"Yakitori",jp:"焼き鳥",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-yakitori-japan-flat-juicy-fish.png"}
+{he:"סושי",en:"Sushi",jp:"寿司",image:"🍣"},
+{he:"ראמן",en:"Ramen",jp:"ラーメン",image:"🍜"},
+{he:"אוניגירי",en:"Onigiri",jp:"おにぎり",image:"🍙"},
+{he:"טמפורה",en:"Tempura",jp:"天ぷら",image:"🍤"},
+{he:"גיוזה",en:"Gyoza",jp:"餃子",image:"🥟"},
+{he:"אודון",en:"Udon",jp:"うどん",image:"🍜"},
+{he:"סובה",en:"Soba",jp:"そば",image:"🍜"},
+{he:"בנטו",en:"Bento",jp:"弁当",image:"🍱"},
+{he:"טאקויאקי",en:"Takoyaki",jp:"たこ焼き",image:"🐙"},
+{he:"יאקיטורי",en:"Yakitori",jp:"焼き鳥",image:"🍢"}
 ],
 
-transport:[],
-shopping:[],
-emergency:[]
+transport:[
+{he:"רכבת",en:"Train",jp:"電車",image:"🚆"},
+{he:"תחנה",en:"Station",jp:"駅",image:"🚉"},
+{he:"רציף",en:"Platform",jp:"ホーム",image:"🛑"},
+{he:"יציאה",en:"Exit",jp:"出口",image:"🚪"},
+{he:"כניסה",en:"Entrance",jp:"入口",image:"🚪"},
+{he:"שינקנסן",en:"Shinkansen",jp:"新幹線",image:"🚄"},
+{he:"מטרו",en:"Metro",jp:"地下鉄",image:"🚇"},
+{he:"אוטובוס",en:"Bus",jp:"バス",image:"🚌"},
+{he:"מונית",en:"Taxi",jp:"タクシー",image:"🚕"},
+{he:"שדה תעופה",en:"Airport",jp:"空港",image:"✈️"},
+{he:"כרטיס",en:"Ticket",jp:"切符",image:"🎫"},
+{he:"מכונת כרטיסים",en:"Ticket Machine",jp:"券売機",image:"🖨️"},
+{he:"רכבת אחרונה",en:"Last Train",jp:"終電",image:"🌙"},
+{he:"מדרגות נעות",en:"Escalator",jp:"エスカレーター",image:"🛝"},
+{he:"מעלית",en:"Elevator",jp:"エレベーター",image:"🛗"}
+],
+
+shopping:[
+{he:"כמה זה עולה?",en:"How much?",jp:"いくらですか？",image:"💰"},
+{he:"כרטיס אשראי",en:"Credit Card",jp:"クレジットカード",image:"💳"},
+{he:"מזומן",en:"Cash",jp:"現金",image:"💵"},
+{he:"קבלה",en:"Receipt",jp:"レシート",image:"🧾"},
+{he:"שקית",en:"Bag",jp:"袋",image:"🛍️"},
+{he:"מבצע",en:"Sale",jp:"セール",image:"🏷️"},
+{he:"פתוח",en:"Open",jp:"営業中",image:"🟢"},
+{he:"סגור",en:"Closed",jp:"閉店",image:"🔴"},
+{he:"קטן",en:"Small",jp:"小さい",image:"🔹"},
+{he:"בינוני",en:"Medium",jp:"中",image:"🔸"},
+{he:"גדול",en:"Large",jp:"大きい",image:"🔶"},
+{he:"אני רק מסתכל",en:"Just Looking",jp:"見ているだけです",image:"👀"},
+{he:"אפשר למדוד?",en:"Can I Try It On?",jp:"試着できますか？",image:"👕"},
+{he:"זול",en:"Cheap",jp:"安い",image:"📉"},
+{he:"יקר",en:"Expensive",jp:"高い",image:"📈"}
+],
+
+emergency:[
+{he:"משטרה",en:"Police",jp:"警察",image:"👮‍♂️"},
+{he:"אמבולנס",en:"Ambulance",jp:"救急車",image:"🚑"},
+{he:"בית חולים",en:"Hospital",jp:"病院",image:"🏥"},
+{he:"בית מרקחת",en:"Pharmacy",jp:"薬局",image:"💊"},
+{he:"רופא",en:"Doctor",jp:"医者",image:"👨‍⚕️"},
+{he:"אני צריך עזרה",en:"Help",jp:"助けてください",image:"🆘"},
+{he:"אני חולה",en:"I'm Sick",jp:"気分が悪いです",image:"🤒"},
+{he:"אני אלרגי",en:"I Have Allergies",jp:"アレルギーがあります",image:"⚠️"},
+{he:"אש",en:"Fire",jp:"火事",image:"🔥"},
+{he:"סכנה",en:"Danger",jp:"危険",image:"⚠️"},
+{he:"איבדתי את הדרכון",en:"I Lost My Passport",jp:"パスポートをなくしました",image:"🛂"},
+{he:"תתקשר למשטרה",en:"Call The Police",jp:"警察を呼んでください",image:"🚨"},
+{he:"תתקשר לאמבולנס",en:"Call An Ambulance",jp:"救急車を呼んでください",image:"🚑"}
+]
+
 };
 
 function speak(text){
@@ -82,29 +128,14 @@ if(jpVoice){ speech.voice = jpVoice; }
 speechSynthesis.speak(speech);
 }
 
-function copy(text){
-navigator.clipboard.writeText(text);
-}
-
-function copyFeedback(btn,text){
-copy(text);
-btn.classList.add("copied");
-const original=btn.textContent;
-btn.textContent="✓";
-setTimeout(()=>{
-btn.classList.remove("copied");
-btn.textContent=original;
-},700);
-}
-
 function createCard(item){
 let imageHtml = "";
 if (item.image) {
-    imageHtml = `<div style="text-align: center; margin-bottom: 12px;"><img src="${item.image}" alt="${item.en || item.he}" style="width: 70px; height: 70px; object-fit: contain;" loading="lazy"></div>`;
+    imageHtml = `<div style="font-size: 40px; text-align: center; margin-bottom: 12px;">${item.image}</div>`;
 }
 
 return `
-<div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}', '${item.en ? item.en.replace(/'/g, "\\'") : ""}', '${item.he.replace(/'/g, "\\'")}')">
+<div class="card">
 <div>
 ${imageHtml}
 <div class="cardMain">
@@ -113,39 +144,17 @@ ${imageHtml}
 <div class="cardJp">${item.jp}</div>
 ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
 </div>
-<button class="playBtn" onclick="event.stopPropagation(); speak('${item.jp}')" aria-label="השמע">
+<button class="playBtn" onclick="speak('${item.jp}')" aria-label="השמע">
 <span class="playIcon"></span>
 </button>
 </div>
 ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
 </div>
-<div class="buttons" onclick="event.stopPropagation();">
+<div class="buttons">
 <button onclick="speak('${item.jp}')">🔊</button>
-<button onclick="copyFeedback(this,'${item.jp}')">📋</button>
 </div>
 </div>
 `;
-}
-
-function openModal(jp, en, he) {
-    modalJP.textContent = jp;
-    modalEN.textContent = en;
-    modalHE.textContent = he;
-    modal.classList.remove("hidden");
-}
-
-if (closeButton) {
-    closeButton.addEventListener("click", () => { modal.classList.add("hidden"); });
-}
-
-if (modal) {
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) { modal.classList.add("hidden"); }
-    });
-}
-
-if (speakButton) {
-    speakButton.addEventListener("click", () => { speak(modalJP.textContent); });
 }
 
 function renderCards(list){
@@ -176,83 +185,31 @@ document.querySelectorAll(".tab").forEach(tab=>{
     });
 });
 
-database.transport = [
-{he:"רכבת",en:"Train",jp:"電車"},
-{he:"תחנה",en:"Station",jp:"駅"},
-{he:"רציף",en:"Platform",jp:"ホーム"},
-{he:"יציאה",en:"Exit",jp:"出口"},
-{he:"כניסה",en:"Entrance",jp:"入口"},
-{he:"שינקנסן",en:"Shinkansen",jp:"新幹線"},
-{he:"מטרו",en:"Metro",jp:"地下鉄"},
-{he:"אוטובוס",en:"Bus",jp:"バス"},
-{he:"מונית",en:"Taxi",jp:"タクシー"},
-{he:"שדה תעופה",en:"Airport",jp:"空港"},
-{he:"כרטיס",en:"Ticket",jp:"切符"},
-{he:"מכונת כרטיסים",en:"Ticket Machine",jp:"券売機"},
-{he:"רכבת אחרונה",en:"Last Train",jp:"終電"},
-{he:"מדרגות נעות",en:"Escalator",jp:"エスカレーター"},
-{he:"מעלית",en:"Elevator",jp:"エレベーター"}
-];
-
-database.shopping = [
-{he:"כמה זה עולה?",en:"How much?",jp:"いくらですか？"},
-{he:"כרטיס אשראי",en:"Credit Card",jp:"クレジットカード"},
-{he:"מזומן",en:"Cash",jp:"現金"},
-{he:"קבלה",en:"Receipt",jp:"レシート"},
-{he:"שקית",en:"Bag",jp:"袋"},
-{he:"מבצע",en:"Sale",jp:"セール"},
-{he:"פתוח",en:"Open",jp:"営業中"},
-{he:"סגור",en:"Closed",jp:"閉店"},
-{he:"קטן",en:"Small",jp:"小さい"},
-{he:"בינוני",en:"Medium",jp:"中"},
-{he:"גדול",en:"Large",jp:"大きい"},
-{he:"אני רק מסתכל",en:"Just Looking",jp:"見ているだけです"},
-{he:"אפשר למדוד?",en:"Can I Try It On?",jp:"試着できますか？"},
-{he:"זול",en:"Cheap",jp:"安い"},
-{he:"יקר",en:"Expensive",jp:"高い"}
-];
-
-database.emergency = [
-{he:"משטרה",en:"Police",jp:"警察"},
-{he:"אמבולנס",en:"Ambulance",jp:"救急車"},
-{he:"בית חולים",en:"Hospital",jp:"病院"},
-{he:"בית מרקחת",en:"Pharmacy",jp:"薬局"},
-{he:"רופא",en:"Doctor",jp:"医者"},
-{he:"אני צריך עזרה",en:"Help",jp:"助けてください"},
-{he:"אני חולה",en:"I'm Sick",jp:"気分が悪いです"},
-{he:"אני אלרגי",en:"I Have Allergies",jp:"アレルギーがあります"},
-{he:"אש",en:"Fire",jp:"火事"},
-{he:"סכנה",en:"Danger",jp:"危険"},
-{he:"איבדתי את הדרכון",en:"I Lost My Passport",jp:"パスポートをなくしました"},
-{he:"תתקשר למשטרה",en:"Call The Police",jp:"警察を呼んでください"},
-{he:"תתקשר לאמבולנס",en:"Call An Ambulance",jp:"救急車を呼んでください"}
-];
-
-// הוספת שאר מאכלי האוכל עם אייקונים תואמים
+// הוספת מאכלים נוספים עם אימוג'י
 database.food.push(
-  {he:"קארי",en:"Japanese Curry",jp:"カレー",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-curry-japan-flat-juicy-fish.png"},
-  {he:"מוצ'י",en:"Mochi",jp:"餅",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-rice-cake-japan-flat-juicy-fish.png"},
-  {he:"דנגו",en:"Dango",jp:"団子",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-dango-japan-flat-juicy-fish.png"},
-  {he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-pancake-japan-flat-juicy-fish.png"},
-  {he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-noodles-japan-flat-juicy-fish.png"},
-  {he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-pork-japan-flat-juicy-fish.png"},
-  {he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-hot-pot-japan-flat-juicy-fish.png"},
-  {he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-sukiyaki-japan-flat-juicy-fish.png"},
-  {he:"אדממה",en:"Edamame",jp:"枝豆",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-edamame-japan-flat-juicy-fish.png"},
-  {he:"דונבורי",en:"Donburi",jp:"丼",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-rice-bowl-japan-flat-juicy-fish.png"}
+  {he:"קארי",en:"Japanese Curry",jp:"カレー",image:"🍛"},
+  {he:"מוצ'י",en:"Mochi",jp:"餅",image:"🍡"},
+  {he:"דנגו",en:"Dango",jp:"団子",image:"🍡"},
+  {he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",image:"🥞"},
+  {he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",image:"🍜"},
+  {he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",image:"🥩"},
+  {he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",image:"🍲"},
+  {he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",image:"🍲"},
+  {he:"אדממה",en:"Edamame",jp:"枝豆",image:"🫛"},
+  {he:"דונבורי",en:"Donburi",jp:"丼",image:"🍚"}
 );
 
 database.phrases.push(
-{he:"אני מישראל",en:"I'm from Israel",jp:"イスラエルから来ました",romaji:"Isuraeru kara kimashita"},
-{he:"אפשר מים?",en:"Water Please",jp:"水をください",romaji:"Mizu o kudasai"},
-{he:"אפשר את החשבון?",en:"The Bill Please",jp:"お会計お願いします",romaji:"Okaikei onegaishimasu"},
-{he:"טעים מאוד",en:"Very Delicious",jp:"とてもおいしいです",romaji:"Totemo oishii desu"},
-{he:"איפה התחנה?",en:"Where Is The Station?",jp:"駅はどこですか？",romaji:"Eki wa doko desu ka"},
-{he:"אפשר Wi-Fi?",en:"Do You Have Wi-Fi?",jp:"Wi-Fiはありますか？",romaji:"Wi-Fi wa arimasu ka"},
-{he:"אני לא אוכל בשר",en:"I Don't Eat Meat",jp:"肉を食べません",romaji:"Niku o tabemasen"},
-{he:"אני צמחוני",en:"I'm Vegetarian",jp:"私はベジタリアンです",romaji:"Watashi wa bejitarian desu"},
-{he:"אני טבעוני",en:"I'm Vegan",jp:"私はヴィーガンです",romaji:"Watashi wa vegan desu"},
-{he:"אפשר תמונה?",en:"Can I Take A Photo?",jp:"写真を撮ってもいいですか？",romaji:"Shashin o totte mo ii desu ka"}
+{he:"אני מישראל",en:"I'm from Israel",jp:"イスラエルから来ました",romaji:"Isuraeru kara kimashita",image:"🇮🇱"},
+{he:"אפשר מים?",en:"Water Please",jp:"水をください",romaji:"Mizu o kudasai",image:"💧"},
+{he:"אפשר את החשבון?",en:"The Bill Please",jp:"お会計お願いします",romaji:"Okaikei onegaishimasu",image:"🧾"},
+{he:"טעים מאוד",en:"Very Delicious",jp:"とてもおいしいです",romaji:"Totemo oishii desu",image:"😋"},
+{he:"איפה התחנה?",en:"Where Is The Station?",jp:"駅はどこですか？",romaji:"Eki wa doko desu ka",image:"🚉"},
+{he:"אפשר Wi-Fi?",en:"Do You Have Wi-Fi?",jp:"Wi-Fiはありますか？",romaji:"Wi-Fi wa arimasu ka",image:"📶"},
+{he:"אני לא אוכל בשר",en:"I Don't Eat Meat",jp:"肉を食べません",romaji:"Niku o tabemasen",image:"🥗"},
+{he:"אני צמחוני",en:"I'm Vegetarian",jp:"私はベジタリアンです",romaji:"Watashi wa bejitarian desu",image:"🥕"},
+{he:"אני טבעוני",en:"I'm Vegan",jp:"私はヴィーガンです",romaji:"Watashi wa vegan desu",image:"🌱"},
+{he:"אפשר תמונה?",en:"Can I Take A Photo?",jp:"写真を撮ってもいいですか？",romaji:"Shashin o totte mo ii desu ka",image:"📸"}
 );
 
 render();
