@@ -53,16 +53,16 @@ phrases:[
 ],
 
 food:[
-{he:"סושי",en:"Sushi",jp:"寿司",image:"https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80"},
-{he:"ראמן",en:"Ramen",jp:"ラーメン",image:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80"},
-{he:"אוניגירי",en:"Onigiri",jp:"おにぎり",image:"https://images.unsplash.com/photo-1607301459267-7c063f26fdb4?auto=format&fit=crop&w=600&q=80"},
-{he:"טמפורה",en:"Tempura",jp:"天ぷら",image:"https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=600&q=80"},
-{he:"גיוזה",en:"Gyoza",jp:"餃子",image:"https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=600&q=80"},
-{he:"אודון",en:"Udon",jp:"うどん",image:"https://images.unsplash.com/photo-1618841539848-3a58e6584432?auto=format&fit=crop&w=600&q=80"},
-{he:"סובה",en:"Soba",jp:"そば",image:"https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80"},
-{he:"בנטו",en:"Bento",jp:"弁当",image:"https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=600&q=80"},
-{he:"טאקויאקי",en:"Takoyaki",jp:"たこ焼き",image:"https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80"},
-{he:"יאקיטורי",en:"Yakitori",jp:"焼き鳥",image:"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=600&q=80"}
+{he:"סושי",en:"Sushi",jp:"寿司",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-sushi-japan-flat-juicy-fish.png"},
+{he:"ראמן",en:"Ramen",jp:"ラーメン",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-ramen-japan-flat-juicy-fish.png"},
+{he:"אוניגירי",en:"Onigiri",jp:"おにぎり",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-onigiri-japan-flat-juicy-fish.png"},
+{he:"טמפורה",en:"Tempura",jp:"天ぷら",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-tempura-japan-flat-juicy-fish.png"},
+{he:"גיוזה",en:"Gyoza",jp:"餃子",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-dumplings-japan-flat-juicy-fish.png"},
+{he:"אודון",en:"Udon",jp:"うどん",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-noodles-japan-flat-juicy-fish.png"},
+{he:"סובה",en:"Soba",jp:"そば",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-soba-japan-flat-juicy-fish.png"},
+{he:"בנטו",en:"Bento",jp:"弁当",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-bento-japan-flat-juicy-fish.png"},
+{he:"טאקויאקי",en:"Takoyaki",jp:"たこ焼き",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-takoyaki-japan-flat-juicy-fish.png"},
+{he:"יאקיטורי",en:"Yakitori",jp:"焼き鳥",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-yakitori-japan-flat-juicy-fish.png"}
 ],
 
 transport:[],
@@ -100,7 +100,7 @@ btn.textContent=original;
 function createCard(item){
 let imageHtml = "";
 if (item.image) {
-    imageHtml = `<img src="${item.image}" alt="${item.en || item.he}" class="cardFoodImg" loading="lazy">`;
+    imageHtml = `<div style="text-align: center; margin-bottom: 12px;"><img src="${item.image}" alt="${item.en || item.he}" style="width: 70px; height: 70px; object-fit: contain;" loading="lazy"></div>`;
 }
 
 return `
@@ -228,18 +228,18 @@ database.emergency = [
 {he:"תתקשר לאמבולנס",en:"Call An Ambulance",jp:"救急車を呼んでください"}
 ];
 
-// הוספת שאר מאכלי האוכל עם תמונות Unsplash נכונות לחלוטין
+// הוספת שאר מאכלי האוכל עם אייקונים תואמים
 database.food.push(
-  {he:"קארי",en:"Japanese Curry",jp:"カレー",image:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80"},
-  {he:"מוצ'י",en:"Mochi",jp:"餅",image:"https://images.unsplash.com/photo-1599599810694-b5b37242c706?auto=format&fit=crop&w=600&q=80"},
-  {he:"דנגו",en:"Dango",jp:"団子",image:"https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"},
-  {he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",image:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80"},
-  {he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",image:"https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=600&q=80"},
-  {he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",image:"https://images.unsplash.com/photo-1604908176997-125f2596f378?auto=format&fit=crop&w=600&q=80"},
-  {he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",image:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80"},
-  {he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",image:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80"},
-  {he:"אדממה",en:"Edamame",jp:"枝豆",image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
-  {he:"דונבורי",en:"Donburi",jp:"丼",image:"https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=600&q=80"}
+  {he:"קארי",en:"Japanese Curry",jp:"カレー",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-curry-japan-flat-juicy-fish.png"},
+  {he:"מוצ'י",en:"Mochi",jp:"餅",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-rice-cake-japan-flat-juicy-fish.png"},
+  {he:"דנגו",en:"Dango",jp:"団子",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-dango-japan-flat-juicy-fish.png"},
+  {he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-pancake-japan-flat-juicy-fish.png"},
+  {he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-noodles-japan-flat-juicy-fish.png"},
+  {he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-pork-japan-flat-juicy-fish.png"},
+  {he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-hot-pot-japan-flat-juicy-fish.png"},
+  {he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-sukiyaki-japan-flat-juicy-fish.png"},
+  {he:"אדממה",en:"Edamame",jp:"枝豆",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-edamame-japan-flat-juicy-fish.png"},
+  {he:"דונבורי",en:"Donburi",jp:"丼",image:"https://img.icons8.com/external-flat-juicy-fish/100/external-rice-bowl-japan-flat-juicy-fish.png"}
 );
 
 database.phrases.push(
