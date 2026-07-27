@@ -675,8 +675,6 @@ input:focus-visible,
         font-size:13px;
     }
 
-    /* hide the old English line + button row, show the round play button instead */
-
     .cardEn{
         display:none;
     }
@@ -688,8 +686,6 @@ input:focus-visible,
     .playBtn{
         display:flex;
     }
-
-    /* modal becomes a bottom sheet on small screens */
 
     #modal{
 

@@ -281,7 +281,7 @@ btn.textContent=original;
 function createCard(item){
 
 let imageHtml = "";
-if (currentTab === "food" && item.image) {
+if (item.image) {
     imageHtml = `<img src="${item.image}" alt="${item.en || item.he}" class="cardFoodImg" loading="lazy">`;
 }
 
