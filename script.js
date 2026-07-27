@@ -158,56 +158,56 @@ image:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&
 he:"אוניגירי",
 en:"Onigiri",
 jp:"おにぎり",
-image:"https://images.unsplash.com/photo-1607301459266-3c06f1577732?auto=format&fit=crop&w=600&q=80"
+image:"https://yogajournal.jp/32784"
 },
 
 {
 he:"טמפורה",
 en:"Tempura",
 jp:"天ぷら",
-image:"https://images.unsplash.com/photo-1610440042657-612c34d95e9f?auto=format&fit=crop&w=600&q=80"
+image:"https://www.sirogohan.com/recipe/tenpura/"
 },
 
 {
 he:"גיוזה",
 en:"Gyoza",
 jp:"餃子",
-image:"https://images.unsplash.com/photo-1541696432-82c6da8ce7bf?auto=format&fit=crop&w=600&q=80"
+image:"https://icook.tw/recipes/464858"
 },
 
 {
 he:"אודון",
 en:"Udon",
 jp:"うどん",
-image:"https://images.unsplash.com/photo-1618842676088-c4d48a6a7c9d?auto=format&fit=crop&w=600&q=80"
+image:"https://delishkitchen.tv/recipes/134126588894642561"
 },
 
 {
 he:"סובה",
 en:"Soba",
 jp:"そば",
-image:"https://images.unsplash.com/photo-1552611052-33e04de081de?auto=format&fit=crop&w=600&q=80"
+image:"https://delishkitchen.tv/recipes/358515040422199737"
 },
 
 {
 he:"בנטו",
 en:"Bento",
 jp:"弁当",
-image:"https://images.unsplash.com/photo-1553163147-622ab57be1c9?auto=format&fit=crop&w=600&q=80"
+image:"https://delishkitchen.tv/articles/332"
 },
 
 {
 he:"טאקויאקי",
 en:"Takoyaki",
 jp:"たこ焼き",
-image:"https://images.unsplash.com/photo-1606787366850-de6330128bfc?auto=format&fit=crop&w=600&q=80"
+image:"https://www.nisshin-seifun-welna.com/index/recipe/detail/n-269.html"
 },
 
 {
 he:"יאקיטורי",
 en:"Yakitori",
 jp:"焼き鳥",
-image:"https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=600&q=80"
+image:"https://delishkitchen.tv/articles/988"
 }
 
 ],
