@@ -223,6 +223,26 @@ navigator.clipboard.writeText(text);
 
 }
 
+function copyFeedback(btn,text){
+
+copy(text);
+
+btn.classList.add("copied");
+
+const original=btn.textContent;
+
+btn.textContent="✓";
+
+setTimeout(()=>{
+
+btn.classList.remove("copied");
+
+btn.textContent=original;
+
+},700);
+
+}
+
 // ---------- Card ----------
 
 function createCard(item){
@@ -277,7 +297,7 @@ ${item.en ?
 
 </button>
 
-<button onclick="copy('${item.jp}')">
+<button onclick="copyFeedback(this,'${item.jp}')">
 
 📋
 
@@ -387,9 +407,15 @@ function render(){
 
                 const yen=parseFloat(input.value)||0;
 
-                document.getElementById("currencyResult").innerHTML=
+                const result=document.getElementById("currencyResult");
 
-                "₪ "+(yen*YEN_RATE).toFixed(2);
+                result.innerHTML="₪ "+(yen*YEN_RATE).toFixed(2);
+
+                result.classList.remove("pulse");
+
+                void result.offsetWidth; // restart animation
+
+                result.classList.add("pulse");
 
             });
 

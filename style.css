@@ -752,3 +752,108 @@ input:focus-visible,
     }
 
 }
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes fadeSlideUp{
+
+    from{
+        opacity:0;
+        transform:translateY(14px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+@keyframes flagWave{
+
+    0%,100%{ transform:rotate(0deg); }
+    20%{ transform:rotate(-10deg); }
+    40%{ transform:rotate(8deg); }
+    60%{ transform:rotate(-6deg); }
+    80%{ transform:rotate(4deg); }
+
+}
+
+@keyframes pulseScale{
+
+    0%{ transform:scale(1); }
+    35%{ transform:scale(1.08); }
+    100%{ transform:scale(1); }
+
+}
+
+/* header entrance */
+
+header h1{
+    animation:fadeSlideUp .5s ease both;
+}
+
+header p{
+    animation:fadeSlideUp .5s ease .08s both;
+}
+
+#search{
+    animation:fadeSlideUp .5s ease .16s both;
+}
+
+.flag{
+    display:inline-block;
+    animation:flagWave 2.2s ease-in-out .6s 1;
+    transform-origin:70% 70%;
+}
+
+/* nav tabs entrance, staggered */
+
+nav .tab{
+    animation:fadeSlideUp .45s ease both;
+}
+
+nav .tab:nth-child(1){ animation-delay:.05s; }
+nav .tab:nth-child(2){ animation-delay:.1s; }
+nav .tab:nth-child(3){ animation-delay:.15s; }
+nav .tab:nth-child(4){ animation-delay:.2s; }
+nav .tab:nth-child(5){ animation-delay:.25s; }
+nav .tab:nth-child(6){ animation-delay:.3s; }
+
+/* card entrance, staggered — replays every render since cards are re-created */
+
+.card{
+    animation:fadeSlideUp .4s ease both;
+}
+
+.card:nth-child(1){ animation-delay:.02s; }
+.card:nth-child(2){ animation-delay:.06s; }
+.card:nth-child(3){ animation-delay:.1s; }
+.card:nth-child(4){ animation-delay:.14s; }
+.card:nth-child(5){ animation-delay:.18s; }
+.card:nth-child(6){ animation-delay:.22s; }
+.card:nth-child(7){ animation-delay:.26s; }
+.card:nth-child(8){ animation-delay:.3s; }
+.card:nth-child(9){ animation-delay:.34s; }
+.card:nth-child(10){ animation-delay:.38s; }
+.card:nth-child(n+11){ animation-delay:.4s; }
+
+/* copy button flash feedback */
+
+.buttons button.copied{
+
+    background:#1f8f4d;
+
+    animation:pulseScale .35s ease;
+
+}
+
+/* currency result pulse on change */
+
+#currencyResult.pulse{
+
+    animation:pulseScale .3s ease;
+
+}
