@@ -15,6 +15,11 @@ const modalHE = document.getElementById("modalHE");
 const speakButton = document.getElementById("speak");
 const closeButton = document.getElementById("close");
 
+const yenToggle = document.getElementById("yenToggle");
+const yenPanel = document.getElementById("yenPanel");
+const yenMiniInput = document.getElementById("yenMiniInput");
+const yenMiniResult = document.getElementById("yenMiniResult");
+
 // ---------- Current Tab ----------
 
 let currentTab = "phrases";
@@ -368,59 +373,6 @@ function render(){
             renderCards(database.emergency);
         break;
 
-        case "currency":
-
-            content.innerHTML=`
-
-            <div class="card">
-
-                <h2>💴 מחשבון ין</h2>
-
-                <input
-                id="yenInput"
-                type="number"
-                placeholder="¥"
-
-                style="
-                width:100%;
-                padding:18px;
-                margin-top:20px;
-                border:none;
-                border-radius:15px;
-                font-size:20px;
-                ">
-
-                <h1 id="currencyResult"
-                style="margin-top:30px;">
-
-                ₪0.00
-
-                </h1>
-
-            </div>
-
-            `;
-
-            const input=document.getElementById("yenInput");
-
-            input.addEventListener("input",()=>{
-
-                const yen=parseFloat(input.value)||0;
-
-                const result=document.getElementById("currencyResult");
-
-                result.innerHTML="₪ "+(yen*YEN_RATE).toFixed(2);
-
-                result.classList.remove("pulse");
-
-                void result.offsetWidth; // restart animation
-
-                result.classList.add("pulse");
-
-            });
-
-        break;
-
     }
 
 }
@@ -608,3 +560,40 @@ database.phrases.push(
 {he:"אפשר תמונה?",en:"Can I Take A Photo?",jp:"写真を撮ってもいいですか？",romaji:"Shashin o totte mo ii desu ka"}
 
 );
+// ---------- Floating Yen Widget ----------
+
+if(yenToggle){
+
+    yenToggle.addEventListener("click",()=>{
+
+        const isHidden=yenPanel.classList.toggle("hidden");
+
+        yenToggle.textContent=isHidden ? "💴" : "✕";
+
+        if(!isHidden){
+            yenMiniInput.focus();
+        }
+
+    });
+
+    yenMiniInput.addEventListener("input",()=>{
+
+        const yen=parseFloat(yenMiniInput.value)||0;
+
+        yenMiniResult.textContent="₪ "+(yen*YEN_RATE).toFixed(2);
+
+    });
+
+    document.addEventListener("click",(e)=>{
+
+        if(!yenPanel.classList.contains("hidden") &&
+           !document.getElementById("yenWidget").contains(e.target)){
+
+            yenPanel.classList.add("hidden");
+            yenToggle.textContent="💴";
+
+        }
+
+    });
+
+}

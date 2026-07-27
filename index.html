@@ -17,7 +17,7 @@
 
 <header>
 
-<h1><span class="flag">🇯🇵</span> Japan Pocket</h1>
+<h1>🇯🇵 Japan Pocket</h1>
 
 <p>כל מה שצריך לטיול ביפן</p>
 
@@ -56,11 +56,6 @@ placeholder="🔍 חפש אוכל, משפט או מילה..."
 <span>חירום</span>
 </button>
 
-<button class="tab" data-tab="currency">
-💴
-<span>ין</span>
-</button>
-
 </nav>
 
 <main id="content">
@@ -86,6 +81,22 @@ placeholder="🔍 חפש אוכל, משפט או מילה..."
 🔊 השמע
 
 </button>
+
+</div>
+
+</div>
+
+<div id="yenWidget">
+
+<button id="yenToggle" aria-label="ממיר ין">💴</button>
+
+<div id="yenPanel" class="hidden">
+
+<label for="yenMiniInput">ין → שקל</label>
+
+<input id="yenMiniInput" type="number" placeholder="¥ הכנס סכום">
+
+<div id="yenMiniResult">₪0.00</div>
 
 </div>
 
