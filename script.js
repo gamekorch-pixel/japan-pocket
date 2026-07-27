@@ -528,17 +528,18 @@ database.emergency = [
 
 database.food.push(
 
-{he:"קארי",en:"Japanese Curry",jp:"カレー",image:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80"},
-{he:"מוצ'י",en:"Mochi",jp:"餅",image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
-{he:"דנגו",en:"Dango",jp:"団子",image:"https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"},
-{he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",image:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80"},
-{he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",image:"https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=600&q=80"},
-{he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",image:"https://images.unsplash.com/photo-1604908176997-125f2596f378?auto=format&fit=crop&w=600&q=80"},
-{he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",image:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80"},
-{he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",image:"https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80"},
-{he:"אדממה",en:"Edamame",jp:"枝豆",image:"https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=600&q=80"},
-{he:"דונבורי",en:"Donburi",jp:"丼",image:"https://images.unsplash.com/photo-1543353071-10c8ba85a904?auto=format&fit=crop&w=600&q=80"}
-
+[
+  {he:"קארי",en:"Japanese Curry",jp:"カレー",image:"https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80"},
+  {he:"מוצ'י",en:"Mochi",jp:"餅",image:"https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=600&q=80"},
+  {he:"דנגו",en:"Dango",jp:"団子",image:"https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=600&q=80"},
+  {he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",image:"https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=600&q=80"},
+  {he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",image:"https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?auto=format&fit=crop&w=600&q=80"},
+  {he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",image:"https://images.unsplash.com/photo-1604908176997-125f2596f378?auto=format&fit=crop&w=600&q=80"},
+  {he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",image:"https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=600&q=80"},
+  {he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",image:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80"},
+  {he:"אדממה",en:"Edamame",jp:"枝豆",image:"https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80"},
+  {he:"דונבורי",en:"Donburi",jp:"丼",image:"https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80"}
+]
 );
 
 // ---------- More Phrases Data ----------
