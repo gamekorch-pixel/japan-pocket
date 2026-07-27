@@ -166,7 +166,7 @@ function createCard(item){
             <button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('${item.jp.replace(/'/g, "\\'")}')">${isFav ? '⭐' : '☆'}</button>
         </div>
         ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
-        <div class="buttons" onclick="event.stopPropagation();">
+        <div class="card-bottom" onclick="event.stopPropagation();">
             <button onclick="speak('${item.jp}')">🔊 השמע</button>
         </div>
     </div>
@@ -198,7 +198,7 @@ function render(){
     renderCards(list);
 }
 
-document.querySelectorAll(".tab").forEach(tab=>{
+document.querySelectorAll(".tab").button || document.querySelectorAll(".tab").forEach(tab=>{
     tab.addEventListener("click",()=>{
         document.querySelectorAll(".tab").forEach(btn=>{ btn.classList.remove("active"); });
         tab.classList.add("active");
