@@ -212,4 +212,4 @@ database.phrases.push(
 {he:"אפשר תמונה?",en:"Can I Take A Photo?",jp:"写真を撮ってもいいですか？",romaji:"Shashin o totte mo ii desu ka",image:"📸"}
 );
 
-render();
+render(); צ
