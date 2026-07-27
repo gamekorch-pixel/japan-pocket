@@ -265,14 +265,32 @@ main{
 
 }
 
-.card h2{
+.cardMain{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+}
+
+.cardText{
+
+    flex:1;
+
+    min-width:0;
+
+}
+
+.cardHe{
 
     font-size:24px;
     font-weight:700;
 
 }
 
-.jp{
+.cardJp{
 
     font-size:clamp(24px,6vw,32px);
 
@@ -286,7 +304,7 @@ main{
 
 }
 
-.en{
+.cardEn{
 
     color:var(--gray);
 
@@ -296,11 +314,63 @@ main{
 
 }
 
-.card p{
+.cardRomaji{
 
     color:var(--gray-soft);
 
     font-size:14px;
+
+}
+
+/* round play button — shown only on mobile list rows */
+
+.playBtn{
+
+    display:none;
+
+    flex-shrink:0;
+
+    width:52px;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:var(--red);
+
+    cursor:pointer;
+
+    align-items:center;
+
+    justify-content:center;
+
+    transition:transform .15s;
+
+}
+
+.playBtn:active{
+
+    transform:scale(.92);
+
+}
+
+.playIcon{
+
+    display:inline-block;
+
+    width:0;
+
+    height:0;
+
+    border-top:9px solid transparent;
+
+    border-bottom:9px solid transparent;
+
+    border-left:14px solid #16130f;
+
+    margin-left:3px;
 
 }
 
@@ -586,18 +656,37 @@ input:focus-visible,
 
     .card{
 
-        padding:18px;
+        padding:16px 18px;
 
-        border-radius:var(--radius-md);
+        border-radius:20px;
 
     }
 
-    .jp{
-        margin:10px 0;
-    }
-
-    .buttons button{
+    .cardHe{
         font-size:16px;
+    }
+
+    .cardJp{
+        font-size:26px;
+        margin:8px 0 4px;
+    }
+
+    .cardRomaji{
+        font-size:13px;
+    }
+
+    /* hide the old English line + button row, show the round play button instead */
+
+    .cardEn{
+        display:none;
+    }
+
+    .buttons{
+        display:none;
+    }
+
+    .playBtn{
+        display:flex;
     }
 
     /* modal becomes a bottom sheet on small screens */

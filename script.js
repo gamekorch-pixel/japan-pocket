@@ -231,23 +231,37 @@ return `
 
 <div class="card">
 
-<h2>${item.he}</h2>
+<div class="cardMain">
 
-<div class="jp">
+<div class="cardText">
 
-${item.jp}
+<div class="cardHe">${item.he}</div>
 
-</div>
-
-<div class="en">
-
-${item.en}
-
-</div>
+<div class="cardJp">${item.jp}</div>
 
 ${item.romaji ?
 
-`<p>${item.romaji}</p>`
+`<div class="cardRomaji">${item.romaji}</div>`
+
+:
+
+""
+
+}
+
+</div>
+
+<button class="playBtn" onclick="speak('${item.jp}')" aria-label="השמע">
+
+<span class="playIcon"></span>
+
+</button>
+
+</div>
+
+${item.en ?
+
+`<div class="cardEn">${item.en}</div>`
 
 :
 
