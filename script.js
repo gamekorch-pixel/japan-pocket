@@ -1,6 +1,8 @@
 const content = document.getElementById("content");
 const modal = document.getElementById("modal");
 const modalJP = document.getElementById("modalJP");
+const modalEN = document.getElementById("modalEN");
+const modalHE = document.getElementById("modalHE");
 const speakButton = document.getElementById("speak");
 const closeBtn = document.getElementById("close");
 
@@ -152,8 +154,10 @@ speechSynthesis.speak(speech);
 function openModal(jpText) {
     const allItems = [...database.phrases, ...database.food, ...database.transport, ...database.shopping, ...database.emergency];
     const found = allItems.find(i => i.jp === jpText);
-    if (found && modalJP) {
-        modalJP.textContent = found.jp;
+    if (found) {
+        if(modalJP) modalJP.textContent = found.jp;
+        if(modalEN) modalEN.textContent = found.en || "";
+        if(modalHE) modalHE.textContent = found.he || "";
     }
     if(modal) modal.classList.remove("hidden");
 }
