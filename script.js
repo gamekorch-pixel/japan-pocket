@@ -13,34 +13,8 @@ let currentTab = "phrases";
 let currentYenRate = 0.024;
 const fallbackYenRate = 0.024;
 
-let clickCounts = {};
-let warningTimeout = null;
-let hasShownWarning = false;
-
-// ניהול מועדפים מתוקן
+// ניהול מועדפים מתוקן ועובד
 let favorites = JSON.parse(localStorage.getItem("japan_pocket_favs")) || [];
-
-// אזהרת ווליום
-const volumeWarning = document.createElement("div");
-volumeWarning.style.cssText = `
-    position: fixed;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 15px 25px;
-    border-radius: 15px;
-    color: #212121;
-    z-index: 1000;
-    background: #e8e8e8;
-    font-weight: bold;
-    font-size: 17px;
-    box-shadow: 4px 8px 19px -3px rgba(0,0,0,0.27);
-    display: none;
-    direction: rtl;
-    text-align: center;
-`;
-volumeWarning.textContent = "ייתכן שהווליום במכשיר שלך מכובה או על שקט";
-document.body.appendChild(volumeWarning);
 
 async function fetchLiveYenRate() {
     try {
@@ -133,22 +107,15 @@ emergency:[
 };
 
 function speak(text){
-if(!window.speechSynthesis) return;
-clickCounts[text] = (clickCounts[text] || 0) + 1;
-if(clickCounts[text] >= 3 && !hasShownWarning){
-    hasShownWarning = true;
-    volumeWarning.style.display = "block";
-    if(warningTimeout) clearTimeout(warningTimeout);
-    warningTimeout = setTimeout(()=>{ volumeWarning.style.display = "none"; }, 4000);
-}
-speechSynthesis.cancel();
-const speech = new SpeechSynthesisUtterance(text);
-speech.lang = "ja-JP";
-speech.rate = 0.9;
-const voices = speechSynthesis.getVoices();
-const jpVoice = voices.find(v=>v.lang.startsWith("ja"));
-if(jpVoice){ speech.voice = jpVoice; }
-speechSynthesis.speak(speech);
+    if(!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "ja-JP";
+    speech.rate = 0.9;
+    const voices = speechSynthesis.getVoices();
+    const jpVoice = voices.find(v=>v.lang.startsWith("ja"));
+    if(jpVoice){ speech.voice = jpVoice; }
+    speechSynthesis.speak(speech);
 }
 
 function openModal(jpText) {
@@ -176,7 +143,6 @@ if (speakButton) {
     speakButton.addEventListener("click", () => { speak(modalJP.textContent); });
 }
 
-// ניהול מועדפים תקין ורנדור מחדש
 function toggleFavorite(jp) {
     const index = favorites.indexOf(jp);
     if (index > -1) {
@@ -189,28 +155,23 @@ function toggleFavorite(jp) {
 }
 
 function createCard(item){
-let isFav = favorites.includes(item.jp);
-return `
-<div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}')">
-<div style="width: 100%; box-sizing: border-box;">
-<div class="cardMain" style="width: 100%; box-sizing: border-box;">
-<div class="cardText" style="min-width: 0; overflow: hidden; text-overflow: ellipsis;">
-<div class="cardHe">${item.he}</div>
-<div class="cardJp">${item.jp}</div>
-${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
-</div>
-<button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('${item.jp.replace(/'/g, "\\'")}')">${isFav ? '⭐' : '☆'}</button>
-<button class="playBtn" onclick="event.stopPropagation(); speak('${item.jp}')" aria-label="השמע">
-<span class="playIcon"></span>
-</button>
-</div>
-${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
-</div>
-<div class="buttons" onclick="event.stopPropagation();">
-<button onclick="speak('${item.jp}')">🔊 השמע</button>
-</div>
-</div>
-`;
+    let isFav = favorites.includes(item.jp);
+    return `
+    <div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}')">
+        <div class="cardMain">
+            <div class="cardText">
+                <div class="cardHe">${item.he}</div>
+                <div class="cardJp">${item.jp}</div>
+                ${item.romaji ? `<div class="cardRomaji">${item.romaji}</div>` : ""}
+            </div>
+            <button class="fav-btn" onclick="event.stopPropagation(); toggleFavorite('${item.jp.replace(/'/g, "\\'")}')">${isFav ? '⭐' : '☆'}</button>
+        </div>
+        ${item.en ? `<div class="cardEn">${item.en}</div>` : ""}
+        <div class="buttons" onclick="event.stopPropagation();">
+            <button onclick="speak('${item.jp}')">🔊 השמע</button>
+        </div>
+    </div>
+    `;
 }
 
 function renderCards(list){
@@ -247,7 +208,6 @@ document.querySelectorAll(".tab").forEach(tab=>{
     });
 });
 
-// הפעלת מתג מצב כהה תלת-ממד
 const darkCheckbox = document.getElementById("darkCheckbox");
 if (darkCheckbox) {
     if (localStorage.getItem("dark_mode") === "true") {
