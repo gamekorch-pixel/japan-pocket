@@ -93,35 +93,22 @@ header p{
 
 }
 
-#search{
-
-    width:100%;
-    margin-top:24px;
-
-    border:1px solid var(--line);
-    outline:none;
-
-    padding:16px 18px;
-
-    font-size:16px; /* keeps iOS from auto-zooming on focus */
-
-    border-radius:var(--radius-sm);
-
-    background:var(--white);
-
-    box-shadow:var(--shadow-sm);
-
-    transition:box-shadow .25s, border-color .25s;
-
+#yenWidgetTop {
+    width: 100%;
+    margin-top: 24px;
+    text-align: right;
 }
 
-#search:focus{
-    border-color:var(--red);
-    box-shadow:var(--shadow-md);
+#yenWidgetTop label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray);
 }
 
-#search::placeholder{
-    color:var(--gray-soft);
+#yenTopInput:focus {
+    border-color: var(--red);
+    box-shadow: var(--shadow-sm);
 }
 
 /* =========================================
@@ -225,7 +212,7 @@ main{
 
     display:grid;
 
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
 
     gap:16px;
 
@@ -248,6 +235,10 @@ main{
     transition:transform .25s, box-shadow .25s;
 
     box-shadow:var(--shadow-sm);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
 }
 
@@ -747,10 +738,6 @@ input:focus-visible,
         padding:16px;
     }
 
-    #search{
-        padding:14px 16px;
-    }
-
 }
 
 /* =========================================
@@ -764,8 +751,6 @@ input:focus-visible,
     100%{ transform:scale(1); }
 
 }
-
-/* clear pressed-state feedback on every tappable element */
 
 .tab:active{
 
@@ -800,8 +785,6 @@ input:focus-visible,
 
 }
 
-/* copy button confirmation */
-
 .buttons button.copied{
 
     background:#1f8f4d;
@@ -809,134 +792,25 @@ input:focus-visible,
 }
 
 /* =========================================
-   FLOATING YEN WIDGET
+   FOOTER
    ========================================= */
 
-#yenWidget{
+#siteFooter{
 
-    position:fixed;
+    text-align:center;
 
-    bottom:calc(20px + var(--safe-bottom));
-
-    left:20px;
-
-    z-index:900;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:flex-start;
-
-    gap:12px;
-
-}
-
-#yenToggle{
-
-    width:56px;
-
-    height:56px;
-
-    border:none;
-
-    border-radius:50%;
-
-    background:var(--red);
-
-    color:white;
-
-    font-size:24px;
-
-    cursor:pointer;
-
-    box-shadow:var(--shadow-md);
-
-    order:2;
-
-}
-
-#yenToggle:active{
-
-    filter:brightness(.85);
-
-}
-
-#yenPanel{
-
-    order:1;
-
-    width:200px;
-
-    background:var(--white);
-
-    border:1px solid var(--line);
-
-    border-radius:var(--radius-md);
-
-    padding:16px;
-
-    box-shadow:var(--shadow-lg);
-
-}
-
-#yenPanel label{
-
-    display:block;
+    padding:24px 16px calc(20px + var(--safe-bottom));
 
     font-size:13px;
 
-    color:var(--gray);
-
-    margin-bottom:8px;
+    color:var(--gray-soft);
 
 }
 
-#yenMiniInput{
+#siteFooter a{
 
-    width:100%;
+    color:var(--gray-soft);
 
-    padding:10px 12px;
-
-    border:1px solid var(--line);
-
-    border-radius:10px;
-
-    font-size:16px;
-
-    outline:none;
-
-}
-
-#yenMiniInput:focus{
-
-    border-color:var(--red);
-
-}
-
-#yenMiniResult{
-
-    margin-top:10px;
-
-    font-size:20px;
-
-    font-weight:700;
-
-    color:var(--red);
-
-}
-
-@media(max-width:700px){
-
-    #yenWidget{
-        left:16px;
-        bottom:calc(16px + var(--safe-bottom));
-    }
-
-    #yenToggle{
-        width:50px;
-        height:50px;
-        font-size:20px;
-    }
+    text-decoration:underline;
 
 }

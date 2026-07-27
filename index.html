@@ -21,11 +21,13 @@
 
 <p>כל מה שצריך לטיול ביפן</p>
 
-<input
-id="search"
-type="text"
-placeholder="🔍 חפש אוכל, משפט או מילה..."
->
+<div id="yenWidgetTop">
+<label for="yenTopInput">המרת יין (שער חי):</label>
+<div style="display: flex; gap: 8px; margin-top: 8px;">
+<input id="yenTopInput" type="number" placeholder="¥ הכנס סכום בין..." style="flex: 1; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); outline: none; font-size: 16px; background: var(--white);">
+<div id="yenTopResult" style="padding: 12px 16px; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-sm); font-weight: 700; color: var(--red); display: flex; align-items: center;">₪0.00</div>
+</div>
+</div>
 
 </header>
 
@@ -86,21 +88,13 @@ placeholder="🔍 חפש אוכל, משפט או מילה..."
 
 </div>
 
-<div id="yenWidget">
 
-<button id="yenToggle" aria-label="ממיר ין">💴</button>
 
-<div id="yenPanel" class="hidden">
+<footer id="siteFooter">
 
-<label for="yenMiniInput">ין → שקל</label>
+© 2026 נתנאל קורצ'גין · <a href="mailto:workforall246@gmail.com">workforall246@gmail.com</a>
 
-<input id="yenMiniInput" type="number" placeholder="¥ הכנס סכום">
-
-<div id="yenMiniResult">₪0.00</div>
-
-</div>
-
-</div>
+</footer>
 
 <script src="script.js"></script>
 

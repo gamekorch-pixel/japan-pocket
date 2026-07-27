@@ -1,12 +1,10 @@
 // ===============================
 // 🇯🇵 JAPAN POCKET 2.0
-// By ChatGPT
 // ===============================
 
 // ---------- Elements ----------
 
 const content = document.getElementById("content");
-const search = document.getElementById("search");
 
 const modal = document.getElementById("modal");
 const modalJP = document.getElementById("modalJP");
@@ -15,18 +13,38 @@ const modalHE = document.getElementById("modalHE");
 const speakButton = document.getElementById("speak");
 const closeButton = document.getElementById("close");
 
-const yenToggle = document.getElementById("yenToggle");
-const yenPanel = document.getElementById("yenPanel");
-const yenMiniInput = document.getElementById("yenMiniInput");
-const yenMiniResult = document.getElementById("yenMiniResult");
+const yenTopInput = document.getElementById("yenTopInput");
+const yenTopResult = document.getElementById("yenTopResult");
 
 // ---------- Current Tab ----------
 
 let currentTab = "phrases";
 
-// ---------- Exchange Rate ----------
+// ---------- Exchange Rate (Live API with Fallback) ----------
 
-const YEN_RATE = 0.024;
+let currentYenRate = 0.024; // Default fallback
+
+async function fetchLiveYenRate() {
+    try {
+        const response = await fetch("https://open.er-api.com/v6/latest/JPY");
+        if (response.ok) {
+            const data = await response.json();
+            if (data && data.rates && data.rates.ILS) {
+                currentYenRate = data.rates.ILS;
+            }
+        }
+    } catch (e) {
+        // Keep fallback rate if network fails
+    }
+}
+fetchLiveYenRate();
+
+if (yenTopInput) {
+    yenTopInput.addEventListener("input", () => {
+        const yen = parseFloat(yenTopInput.value) || 0;
+        yenTopResult.textContent = "₪ " + (yen * currentYenRate).toFixed(2);
+    });
+}
 
 // ---------- DATA ----------
 
@@ -126,60 +144,70 @@ food:[
 he:"סושי",
 en:"Sushi",
 jp:"寿司",
+icon:"🍣"
 },
 
 {
 he:"ראמן",
 en:"Ramen",
 jp:"ラーメン",
+icon:"🍜"
 },
 
 {
 he:"אוניגירי",
 en:"Onigiri",
 jp:"おにぎり",
+icon:"🍙"
 },
 
 {
 he:"טמפורה",
 en:"Tempura",
 jp:"天ぷら",
+icon:"🍤"
 },
 
 {
 he:"גיוזה",
 en:"Gyoza",
 jp:"餃子",
+icon:"🥟"
 },
 
 {
 he:"אודון",
 en:"Udon",
 jp:"うどん",
+icon:"🍲"
 },
 
 {
 he:"סובה",
 en:"Soba",
 jp:"そば",
+icon:"🍜"
 },
 
 {
 he:"בנטו",
 en:"Bento",
 jp:"弁当",
+icon:"🍱"
 },
 
 {
 he:"טאקויאקי",
 en:"Takoyaki",
 jp:"たこ焼き",
+icon:"🐙"
 },
 
 {
 he:"יאקיטורי",
 en:"Yakitori",
 jp:"焼き鳥",
+icon:"🍢"
 }
 
 ],
@@ -252,10 +280,17 @@ btn.textContent=original;
 
 function createCard(item){
 
+let iconHtml = "";
+if (currentTab === "food" && item.icon) {
+    iconHtml = `<div style="font-size: 32px; margin-bottom: 6px;" aria-hidden="true">${item.icon}</div>`;
+}
+
 return `
 
-<div class="card">
+<div class="card" onclick="openModal('${item.jp.replace(/'/g, "\\'")}', '${item.en ? item.en.replace(/'/g, "\\'") : ""}', '${item.he.replace(/'/g, "\\'")}')">
 
+<div>
+${iconHtml}
 <div class="cardMain">
 
 <div class="cardText">
@@ -276,7 +311,7 @@ ${item.romaji ?
 
 </div>
 
-<button class="playBtn" onclick="speak('${item.jp}')" aria-label="השמע">
+<button class="playBtn" onclick="event.stopPropagation(); speak('${item.jp}')" aria-label="השמע">
 
 <span class="playIcon"></span>
 
@@ -293,8 +328,9 @@ ${item.en ?
 ""
 
 }
+</div>
 
-<div class="buttons">
+<div class="buttons" onclick="event.stopPropagation();">
 
 <button onclick="speak('${item.jp}')">
 
@@ -315,10 +351,35 @@ ${item.en ?
 `;
 
 }
-// ======================================
-// JAPAN POCKET 2.0
-// Part 2 - Render + Tabs + Search
-// ======================================
+
+// ---------- Modal Handling ----------
+
+function openModal(jp, en, he) {
+    modalJP.textContent = jp;
+    modalEN.textContent = en;
+    modalHE.textContent = he;
+    modal.classList.remove("hidden");
+}
+
+if (closeButton) {
+    closeButton.addEventListener("click", () => {
+        modal.classList.add("hidden");
+    });
+}
+
+if (modal) {
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            modal.classList.add("hidden");
+        }
+    });
+}
+
+if (speakButton) {
+    speakButton.addEventListener("click", () => {
+        speak(modalJP.textContent);
+    });
+}
 
 // ---------- Render ----------
 
@@ -393,77 +454,13 @@ document.querySelectorAll(".tab").forEach(tab=>{
 
         currentTab=tab.dataset.tab;
 
-        search.value="";
-
         render();
 
     });
 
 });
 
-// ---------- Search ----------
-
-search.addEventListener("input",()=>{
-
-    const value=search.value.toLowerCase().trim();
-
-    if(value===""){
-
-        render();
-
-        return;
-
-    }
-
-    const results=[];
-
-    Object.values(database).forEach(category=>{
-
-        if(!Array.isArray(category)) return;
-
-        category.forEach(item=>{
-
-            const he=(item.he||"").toLowerCase();
-
-            const en=(item.en||"").toLowerCase();
-
-            const jp=(item.jp||"").toLowerCase();
-
-            const romaji=(item.romaji||"").toLowerCase();
-
-            if(
-
-                he.includes(value) ||
-
-                en.includes(value) ||
-
-                jp.includes(value) ||
-
-                romaji.includes(value)
-
-            ){
-
-                results.push(item);
-
-            }
-
-        });
-
-    });
-
-    renderCards(results);
-
-});
-
-// ---------- Start ----------
-
-render();
-// ======================================
-// JAPAN POCKET 2.0
-// Part 3 - More Data
-// ======================================
-
-// ---------- Transport ----------
+// ---------- Transport Data ----------
 
 database.transport = [
 
@@ -485,7 +482,7 @@ database.transport = [
 
 ];
 
-// ---------- Shopping ----------
+// ---------- Shopping Data ----------
 
 database.shopping = [
 
@@ -507,7 +504,7 @@ database.shopping = [
 
 ];
 
-// ---------- Emergency ----------
+// ---------- Emergency Data ----------
 
 database.emergency = [
 
@@ -527,24 +524,24 @@ database.emergency = [
 
 ];
 
-// ---------- More Food ----------
+// ---------- More Food Data with Icons ----------
 
 database.food.push(
 
-{he:"קארי",en:"Japanese Curry",jp:"カレー"},
-{he:"מוצ'י",en:"Mochi",jp:"餅"},
-{he:"דנגו",en:"Dango",jp:"団子"},
-{he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き"},
-{he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば"},
-{he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ"},
-{he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ"},
-{he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き"},
-{he:"אדממה",en:"Edamame",jp:"枝豆"},
-{he:"דונבורי",en:"Donburi",jp:"丼"}
+{he:"קארי",en:"Japanese Curry",jp:"カレー",icon:"🍛"},
+{he:"מוצ'י",en:"Mochi",jp:"餅",icon:"🍡"},
+{he:"דנגו",en:"Dango",jp:"団子",icon:"🍡"},
+{he:"אוקונומיאקי",en:"Okonomiyaki",jp:"お好み焼き",icon:"🥞"},
+{he:"יאקיסובה",en:"Yakisoba",jp:"焼きそば",icon:"🍝"},
+{he:"טונקאטסו",en:"Tonkatsu",jp:"とんかつ",icon:"🥩"},
+{he:"שאבו שאבו",en:"Shabu Shabu",jp:"しゃぶしゃぶ",icon:"🍲"},
+{he:"סוקיאקי",en:"Sukiyaki",jp:"すき焼き",icon:"🥘"},
+{he:"אדממה",en:"Edamame",jp:"枝豆",icon:"🌿"},
+{he:"דונבורי",en:"Donburi",jp:"丼",icon:"🍚"}
 
 );
 
-// ---------- More Phrases ----------
+// ---------- More Phrases Data ----------
 
 database.phrases.push(
 
@@ -555,45 +552,12 @@ database.phrases.push(
 {he:"איפה התחנה?",en:"Where Is The Station?",jp:"駅はどこですか？",romaji:"Eki wa doko desu ka"},
 {he:"אפשר Wi-Fi?",en:"Do You Have Wi-Fi?",jp:"Wi-Fiはありますか？",romaji:"Wi-Fi wa arimasu ka"},
 {he:"אני לא אוכל בשר",en:"I Don't Eat Meat",jp:"肉を食べません",romaji:"Niku o tabemasen"},
-{he:"אני צמחוני",en:"I'm Vegetarian",jp:"私はベジタリアンです",romaji:"Watashi wa bejitarian desu"},
+{he:"אני צמחוני",en:"I'm Vegetarian",jp:"寿司",romaji:"Watashi wa bejitarian desu"},
 {he:"אני טבעוני",en:"I'm Vegan",jp:"私はヴィーガンです",romaji:"Watashi wa vegan desu"},
 {he:"אפשר תמונה?",en:"Can I Take A Photo?",jp:"写真を撮ってもいいですか？",romaji:"Shashin o totte mo ii desu ka"}
 
 );
-// ---------- Floating Yen Widget ----------
 
-if(yenToggle){
+// ---------- Start ----------
 
-    yenToggle.addEventListener("click",()=>{
-
-        const isHidden=yenPanel.classList.toggle("hidden");
-
-        yenToggle.textContent=isHidden ? "💴" : "✕";
-
-        if(!isHidden){
-            yenMiniInput.focus();
-        }
-
-    });
-
-    yenMiniInput.addEventListener("input",()=>{
-
-        const yen=parseFloat(yenMiniInput.value)||0;
-
-        yenMiniResult.textContent="₪ "+(yen*YEN_RATE).toFixed(2);
-
-    });
-
-    document.addEventListener("click",(e)=>{
-
-        if(!yenPanel.classList.contains("hidden") &&
-           !document.getElementById("yenWidget").contains(e.target)){
-
-            yenPanel.classList.add("hidden");
-            yenToggle.textContent="💴";
-
-        }
-
-    });
-
-}
+render();
