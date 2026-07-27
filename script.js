@@ -19,7 +19,7 @@ let warningTimeout = null;
 
 // יצירת אלמנט הודעת אזהרה דינמית לווליום
 const volumeWarning = document.createElement("div");
-volumeWarning.style.cssText = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:#fff; padding:10px 20px; border-radius:8px; font-size:14px; z-index:1000; display:none; box-shadow:0 4px 10px rgba(0,0,0,0.3); direction:rtl;";
+volumeWarning.style.cssText = "position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#333; color:#1f96a1; padding:10px 20px; border-radius:8px; font-size:14px; z-index:1000; display:none; box-shadow:0 4px 10px rgba(0,0,0,0.3); direction:rtl;";
 volumeWarning.textContent = "ייתכן שהווליום במכשיר שלך מכובה או על שקט";
 document.body.appendChild(volumeWarning);
 
