@@ -13,7 +13,6 @@ let currentTab = "phrases";
 let currentYenRate = 0.024;
 const fallbackYenRate = 0.024;
 
-// ניהול מועדפים מתוקן ועובד
 let favorites = JSON.parse(localStorage.getItem("japan_pocket_favs")) || [];
 
 async function fetchLiveYenRate() {
