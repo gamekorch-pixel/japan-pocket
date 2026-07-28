@@ -74,8 +74,7 @@ header p{
     transition:border-color .3s, background-color .3s;
 }
 
-.yen-converter-container input,
-.yen-converter-container div#yenTopResult {
+.yen-converter-container input {
     flex: 1;
     width: 50%;
     padding: 15px 10px;
@@ -90,39 +89,22 @@ header p{
     color:inherit;
 }
 
-.yen-converter-container div#yenTopResult{
+#ilsInput{
     color:var(--red);
 }
 
 .yen-divider {
     flex: 0 0 auto !important;
-    width: 36px;
-    height: 36px;
-    border: none;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     background-color: var(--paper-alt);
-    color: var(--ink);
+    color: var(--gray);
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    font-size: 15px;
-    transition: transform .3s ease, background-color .2s ease, color .2s ease;
+    font-size: 13px;
     margin: 0 6px;
-}
-
-.yen-divider:hover{
-    background-color: var(--red-soft);
-    color: var(--red);
-}
-
-.yen-divider.spin{
-    animation: yenSpin .4s ease;
-}
-
-@keyframes yenSpin{
-    from{ transform: rotate(0deg); }
-    to{ transform: rotate(180deg); }
 }
 
 nav{
@@ -558,23 +540,17 @@ body.dark-mode .yen-converter-container {
     border-color: #444;
 }
 
-body.dark-mode .yen-converter-container input,
-body.dark-mode .yen-converter-container div#yenTopResult {
+body.dark-mode .yen-converter-container input {
     color: #e6e2df;
 }
 
-body.dark-mode .yen-converter-container div#yenTopResult{
+body.dark-mode #ilsInput{
     color:#ff5252;
 }
 
 body.dark-mode .yen-divider {
     background-color: #2d2d2d;
     color: #e6e2df;
-}
-
-body.dark-mode .yen-divider:hover{
-    background-color: rgba(255,82,82,.15);
-    color: #ff5252;
 }
 
 body.dark-mode button, 
