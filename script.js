@@ -6,6 +6,20 @@ const closeBtn = document.getElementById("close");
 
 const yenTopInput = document.getElementById("yenTopInput");
 const yenTopResult = document.getElementById("yenTopResult");
+const yenSwapBtn = document.getElementById("yenSwapBtn");
+
+// כיוון ההמרה: true = ין -> שקל, false = שקל -> ין
+let yenToShekel = true;
+
+function updateYenConversion(){
+    if(!yenTopInput || !yenTopResult) return;
+    const amount = parseFloat(yenTopInput.value) || 0;
+    if(yenToShekel){
+        yenTopResult.textContent = (amount * currentYenRate).toFixed(2) + " ₪";
+    } else {
+        yenTopResult.textContent = (amount / currentYenRate).toFixed(2) + " ¥";
+    }
+}
 
 let currentTab = "phrases";
 let currentYenRate = 0.024;
@@ -60,8 +74,28 @@ if (yenTopInput) {
         if(yenTopInput.value.length > 10) {
             yenTopInput.value = yenTopInput.value.slice(0, 10);
         }
-        const yen = parseFloat(yenTopInput.value) || 0;
-        yenTopResult.textContent = (yen * currentYenRate).toFixed(2) + " ₪";
+        updateYenConversion();
+    });
+}
+
+if (yenSwapBtn) {
+    yenSwapBtn.addEventListener("click", () => {
+        // ממיר את הסכום הקיים לצד השני כדי לשמור על רציפות, ואז מחליף כיוון
+        const currentAmount = parseFloat(yenTopInput.value) || 0;
+        const convertedAmount = yenToShekel
+            ? currentAmount * currentYenRate
+            : currentAmount / currentYenRate;
+
+        yenToShekel = !yenToShekel;
+
+        yenTopInput.placeholder = yenToShekel ? "הכנס סכום ¥" : "הכנס סכום ₪";
+        yenTopInput.value = currentAmount ? convertedAmount.toFixed(2) : "";
+
+        updateYenConversion();
+
+        yenSwapBtn.classList.remove("spin");
+        void yenSwapBtn.offsetWidth;
+        yenSwapBtn.classList.add("spin");
     });
 }
 

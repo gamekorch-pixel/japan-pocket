@@ -95,10 +95,34 @@ header p{
 }
 
 .yen-divider {
-    width: 2px;
-    height: 30px;
-    background-color: #212121;
-    flex: 0 0 2px !important;
+    flex: 0 0 auto !important;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    background-color: var(--paper-alt);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 15px;
+    transition: transform .3s ease, background-color .2s ease, color .2s ease;
+    margin: 0 6px;
+}
+
+.yen-divider:hover{
+    background-color: var(--red-soft);
+    color: var(--red);
+}
+
+.yen-divider.spin{
+    animation: yenSpin .4s ease;
+}
+
+@keyframes yenSpin{
+    from{ transform: rotate(0deg); }
+    to{ transform: rotate(180deg); }
 }
 
 nav{
@@ -544,7 +568,13 @@ body.dark-mode .yen-converter-container div#yenTopResult{
 }
 
 body.dark-mode .yen-divider {
-    background-color: #444;
+    background-color: #2d2d2d;
+    color: #e6e2df;
+}
+
+body.dark-mode .yen-divider:hover{
+    background-color: rgba(255,82,82,.15);
+    color: #ff5252;
 }
 
 body.dark-mode button, 
